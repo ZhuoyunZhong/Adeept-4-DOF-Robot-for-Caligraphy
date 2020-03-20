@@ -11,7 +11,9 @@ Environment: Ubuntu 18.04 + ROS Melodic
 To install gazebo controllers:
 
 `sudo apt-get install ros-melodic-joint-state-controller`
+
 `sudo apt-get install ros-melodic-effort-controllers`
+
 `sudo apt-get install ros-melodic-position-controllers`
 
 Build Instruction
@@ -19,6 +21,7 @@ Build Instruction
 1. Clone this repository under **catkin_ws/src/**
 2. Compile under **catkin_ws**: `catkin_make`
 3. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_command/src/**
+4. Give python files permission: `chmod +x get_homogeneous.py adeept_connector.py adeept_FK_server.py adeept_IK_server.py joints_pos_controller.py joints_vel_controller.py adeept_VK_server.py switch_control.py `.
 
 ## Launch the Adeept Robot
 
@@ -29,6 +32,8 @@ To see the robot in rviz:
 To generate the robot in gazebo:
 
 `roslaunch adeept_gazebo adeept_world.launch`
+
+@TODO
 
 To launch all the command nodes:
 
