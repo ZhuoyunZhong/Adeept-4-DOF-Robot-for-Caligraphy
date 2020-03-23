@@ -6,9 +6,11 @@
 
 ## Install & Build
 
-Environment: Ubuntu 18.04 + ROS Melodic
+**Environment**: Ubuntu 18.04 + ROS Melodic
 
-To install gazebo controllers:
+**Prerequisite**
+
+Install gazebo controllers:
 
 `sudo apt-get install ros-melodic-joint-state-controller`
 
@@ -16,12 +18,14 @@ To install gazebo controllers:
 
 `sudo apt-get install ros-melodic-position-controllers`
 
-Build Instruction
+To use Arduino (Hardware) in ROS, follow the instructions to [install Arduino IDE](http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup) and [install rosserial library](http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup).
+
+**Build Instruction**
 
 1. Clone this repository under **catkin_ws/src/**
 2. Compile under **catkin_ws**: `catkin_make`
 3. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_command/src/**
-4. (To be removed) Give python files permission: `chmod +x get_homogeneous.py adeept_connector.py adeept_kin_server.py joints_pos_controller.py joints_vel_controller.py adeept_VK_server.py switch_control.py `.
+4. Give python files permission: `chmod +x get_homogeneous.py adeept_connector.py adeept_kin_server.py joints_pos_controller.py joints_vel_controller.py adeept_VK_server.py switch_control.py `.
 
 ## Launch the Adeept Robot
 
@@ -37,7 +41,7 @@ After launching, one can try to control the robot by
 
 `rostopic pub -1 /adeept/joint1_position_controller/command std_msgs/Float64 "data: 0.5"`
 
-@TODO
+@ Not recommended until all the nodes are implemented and working
 
 To launch all the command nodes:
 
@@ -48,7 +52,7 @@ To launch all the command nodes:
 
 @TODO
 
-The code Implemented three nodes including a forward kinematic, an inverse kinematic and a connector. After opening all the nodes, there will be some services. The first two nodes provide inverse kinematic and forward kinematic calculation.
+For the robot kinematics, the code Implemented two nodes including a forward kinematic node and a connector. After opening all the nodes, there will be some services. The first node provide inverse kinematic and forward kinematic calculation.
 
 `rosservice call inv_kin x, y, z, phi, theta, psi` 
 
@@ -62,11 +66,21 @@ The connector builds bridges for connecting gazebo robot and kinematic nodes. Th
 
 ---
 
-For the velocity kinematic part,  codes for forward and inverse velocity kinematic were implemented. The node provides inverse velocity kinematic and forward velocity kinematic calculation.
+@TODO
+
+In terms of the velocity kinematic part, codes for forward and inverse velocity kinematic were implemented. The node provides inverse velocity kinematic and forward velocity kinematic calculation.
 
 `rosservice call vel_inv_kin q1, q2, q3, x, y, z, Vx, Vy, Vz, Wx, Wy, Wz` 
 
 `rosservice call vel_for_kin q1, q2, q3, q1_dot, q2_dot, q3_dot `
+
+@Maybe possible to implement (not exist in previous codes)
+
+The connector could also check if the nodes of velocity kinematic is working correctly.
+
+`rosservice call check_vel_inv`
+
+`rosservice call check_vel_for`
 
 ---
 
