@@ -113,14 +113,14 @@ def handle_velocity_inverse_kinematics(req):
 
 
 # Server
-def adeept_VK_server():
+def adeept_vk_server():
     rospy.init_node('vel_kin_server')
     s1 = rospy.Service('vel_for_kin', AdeeptVelFK, handle_velocity_forward_kinematics)
     s2 = rospy.Service('vel_inv_kin', AdeeptVelIK, handle_velocity_inverse_kinematics)
-    print "Ready for Vel Kin 7"
+    print "Ready for Vel Kin"
     
     rospy.spin()
 
 
 if __name__ == "__main__":
-    adeept_VK_server()
+    adeept_vk_server()

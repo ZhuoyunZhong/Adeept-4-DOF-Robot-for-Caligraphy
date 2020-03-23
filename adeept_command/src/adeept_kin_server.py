@@ -1,11 +1,15 @@
 #!/usr/bin/env python
-import rospy
-from math import sin, cos, acos, atan2
+
+from adeept_command.srv import AdeeptKinFK, AdeeptKinFKResponse, AdeeptHomoMatrix
 from adeept_command.srv import AdeeptKinIK, AdeeptKinIKResponse
-#Assuming that input is x,y,z,phi,theta,psi and output is q1,q2,q3
+from math import atan2, sqrt, pow, sin, cos, acos, atan2
+import numpy
+from helper import ma2np
+
+import rospy
 
 
-def handle_IK(req):
+def handle_inverse_kinematics(req):
     # Robot dimension
     a1 = 0.55
     a2 = 0.425
@@ -55,12 +59,38 @@ def handle_IK(req):
     return AdeeptKinIKResponse(True, q1, q2, q3)
 
 
-def adeept_IK_server():
-    rospy.init_node('inv_kin_server')
-    s = rospy.Service('inv_kin', AdeeptKinIK, handle_IK)
+def handle_forward_kinematics(req):
+    # Get Homogeneous Matrix
+    rospy.wait_for_service('homogeneous_matrix')
+    try:
+        get_homo_matrix = rospy.ServiceProxy('homogeneous_matrix', AdeeptHomoMatrix)
+        homo_matrix = get_homo_matrix(req.q1, req.q2, req.q3)
+    except rospy.ServiceException, e:
+        print "Service call failed: %s"%e
     
+    A1 = ma2np(homo_matrix.A1)
+    A2 = ma2np(homo_matrix.A2)
+    A3 = ma2np(homo_matrix.A3)
+
+    transform = numpy.matmul(numpy.matmul(A1, A2), A3)
+
+    x = transform[0, 3]
+    y = transform[1, 3]
+    z = transform[2, 3]
+    roll = atan2(transform[2, 1], transform[2, 2])
+    pitch = atan2((-1 * transform[2, 0]), sqrt(pow(transform[2, 1], 2) + pow(transform[2, 2], 2)))
+    yaw = atan2(transform[1, 0], transform[0, 0])
+
+    return AdeeptKinFKResponse(x, y, z, roll, pitch, yaw)
+
+
+def adeept_kin_server():
+    rospy.init_node('kin_server')
+    s = rospy.Service('for_kin', AdeeptKinFK, handle_forward_kinematics)
+    s = rospy.Service('inv_kin', AdeeptKinIK, handle_inverse_kinematics)
+
     rospy.spin()
 
 
 if __name__ == "__main__":
-    adeept_IK_server()
+    adeept_kin_server()

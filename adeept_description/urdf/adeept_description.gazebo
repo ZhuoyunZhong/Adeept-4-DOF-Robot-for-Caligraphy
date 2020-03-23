@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot>
+
+  <!-- For gazebo colors -->
+  <gazebo reference="base_link">
+    <material>Gazebo/Brown</material>
+  </gazebo>
+  <gazebo reference="Link_1">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  <gazebo reference="Link_2">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  <gazebo reference="Link_3">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  <gazebo reference="Link_4">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <!-- controller plugin-->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/adeept</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+</robot>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This original URDF was automatically created by SolidWorks to URDF Exporter! 
+     Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+
+<!-- More features were added after convertion-->
+
+<robot
+  name="adeept" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find adeept_description)/urdf/materials.xacro" />
+  <!-- Import Gazebo colors and controller plugin -->
+  <xacro:include filename="$(find adeept_description)/urdf/adeept_description.gazebo" />
+
+  <link
+    name="world">
+  </link>
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.00044464 -0.000495 0.033735"
+        rpy="0 0 0" />
+      <mass
+        value="0.22" />
+      <inertia
+        ixx="1.42E-04"
+        ixy="0"
+        ixz="0"
+        iyy="1.20E-04"
+        iyz="0"
+        izz="2.54E-04" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="-1.5708 0 -1.5708" />
+      <geometry>
+        <mesh
+          filename="package://adeept_description/meshes/base_link.STL" />
+      </geometry>
+      <material name = "black"/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="-1.5708 0 -1.5708" />
+      <geometry>
+        <mesh
+          filename="package://adeept_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint_0"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="world" />
+    <child
+      link="base_link" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+
+  <link
+    name="Link_1">
+    <inertial>
+      <origin
+        xyz="-3.27107590780365E-06 4.14588006162415E-08 -0.00844149651760157"
+        rpy="0 0 0" />
+      <mass
+        value="0.150" />
+      <inertia
+        ixx="4.48E-05"
+        ixy="0"
+        ixz="0"
+        iyy="4.15E-05"
+        iyz="0"
+        izz="6.16E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 3.1416 -1.5708" />
+      <geometry>
+        <mesh
+          filename="package://adeept_description/meshes/Link_1.STL" />
+      </geometry>
+      <material name = "grey"/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 3.1416 -1.5708" />
+      <geometry>
+        <mesh
+          filename="package://adeept_description/meshes/Link_1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint_1"
+    type="revolute">
+    <origin
+      xyz="0 0 0.06"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="Link_1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="100.0"
+      velocity="0.5" />
+    <dynamics 
+      damping="0.2" 
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="Link_2">
+    <inertial>
+      <origin
+        xyz="0.0325 4.1458800642073E-08 -0.02025"
+        rpy="0 0 0" />
+      <mass
+        value="0.057" />
+      <inertia
+        ixx="1.14E-04"
+        ixy="0"
+        ixz="0"
+        iyy="3.62E-03"
+        iyz="0"
+        izz="3.73E-03" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.02025"
+        rpy="0 0 1.5708" />
+      <geometry>
+        <mesh
+          filename="package://adeept_description/meshes/Link_2.STL" />
+      </geometry>
+      <material name = "grey"/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.02025"
+        rpy="0 0 1.5708" />
+      <geometry>
+        <mesh
+          filename="package://adeept_description/meshes/Link_2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint_2"
+    type="revolute">
+    <origin
+      xyz="0 0 0.04"
+      rpy="1.5708 0 0" />
+    <parent
+      link="Link_1" />
+    <child
+      link="Link_2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2.70389"
+      upper="0.43611"
+      effort="100.0"
+      velocity="0.5" />
+    <dynamics 
+      damping="0.2" 
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="Link_3">
+    <inertial>
+      <origin
+        xyz="0.0376674868211068 0.00113678015692259 -0.0152499999999996"
+        rpy="0 0 0" />
+      <mass
+        value="0.076" />
+      <inertia
+        ixx="5.58E-06"
+        ixy="0"
+        ixz="0"
+        iyy="2.40E-05"
+        iyz="0"
+        izz="2.44E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.01525"
+        rpy="0 0 1.5708" />
+      <geometry>
+        <mesh
+          filename="package://adeept_description/meshes/Link_3.STL" />
+      </geometry>
+      <material name = "grey"/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.01525"
+        rpy="0 0 1.5708" />
+      <geometry>
+        <mesh
+          filename="package://adeept_description/meshes/Link_3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint_3"
+    type="revolute">
+    <origin
+      xyz="0 0.065 0"
+      rpy="3.1416 0 1.5708" />
+    <parent
+      link="Link_2" />
+    <child
+      link="Link_3" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2.70389"
+      upper="0.43611"
+      effort="100.0"
+      velocity="0.5" />
+    <dynamics 
+      damping="0.2" 
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="Link_4">
+    <inertial>
+      <origin
+        xyz="-3.2710759101577E-06 -0.0138763286863452 -0.00632537501337554"
+        rpy="0 0 0" />
+      <mass
+        value="0.020" />
+      <inertia
+        ixx="4.39E-05"
+        ixy="0"
+        ixz="0"
+        iyy="9.30E-05"
+        iyz="0"
+        izz="1.27E-04" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.0105"
+        rpy="-1.5708 0 1.5708" />
+      <geometry>
+        <mesh
+          filename="package://adeept_description/meshes/Link_4.STL" />
+      </geometry>
+      <material name = "grey"/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.0105"
+        rpy="-1.5708 0 1.5708" />
+      <geometry>
+        <mesh
+          filename="package://adeept_description/meshes/Link_4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint_4"
+    type="revolute">
+    <origin
+      xyz="0 0.055 0"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="Link_3" />
+    <child
+      link="Link_4" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.48278"
+      upper="1.65722"
+      effort="100.0"
+      velocity="0.5" />
+    <dynamics 
+      damping="0.2" 
+      friction="0.1" />
+  </joint>
+
+    <link
+    name="end">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.001" />
+      <inertia
+        ixx="4E-10"
+        ixy="0"
+        ixz="0"
+        iyy="4E-10"
+        iyz="0"
+        izz="4E-10" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <sphere radius = "0.001"/>
+      </geometry>
+      <material name = "black"/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <sphere radius = "0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint_end"
+    type="fixed">
+    <origin
+      xyz="0.013 0 0.0665"
+      rpy="0 0 0" />
+    <parent
+      link="Link_4" />
+    <child
+      link="end" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+
+  <!-- Controller -->
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="Joint_1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="Joint_2">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="Joint_3">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+    <transmission name="tran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="Joint_4">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+</robot>

@@ -9,14 +9,16 @@
 	output="screen" ns="/adeept" args="joint_state_controller
 					  joint1_position_controller
 					  joint2_position_controller
-            joint3_position_controller"/>
+            joint3_position_controller
+            joint4_position_controller"/>
             
   <!-- velocity controller stand by -->
   <node name="controller_spawner_stopped" pkg="controller_manager" type="spawner" respawn="false"
 	output="screen" ns="/adeept" args="--stopped
 					  joint1_velocity_controller
 					  joint2_velocity_controller
-            joint3_velocity_controller"/>
+            joint3_velocity_controller
+            joint4_velocity_controller"/>
   
 
   <!-- convert joint states to TF transforms for rviz, etc -->

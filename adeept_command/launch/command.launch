@@ -6,8 +6,7 @@
   <!-- load connector -->
   <node name="kin_connector" pkg="adeept_command" type="adeept_connector.py"/>
   <!-- load position kinematics -->
-  <node name="for_kin_server" pkg="adeept_command" type="adeept_FK_server.py"/>
-  <node name="inv_kin_server" pkg="adeept_command" type="adeept_IK_server.py"/>
+  <node name="kin_server" pkg="adeept_command" type="adeept_kin_server.py"/>
 
   <!-- load velocity kinematics -->
   <node name="vel_kin_server" pkg="adeept_command" type="adeept_VK_server.py"/>
