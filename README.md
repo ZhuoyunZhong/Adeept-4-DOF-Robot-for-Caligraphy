@@ -26,6 +26,7 @@ To use Arduino (Hardware) in ROS, follow the instructions to [install Arduino ID
 2. Compile under **catkin_ws**: `catkin_make`
 3. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_command/src/**
 4. Give python files permission: `chmod +x get_homogeneous.py adeept_connector.py adeept_kin_server.py joints_pos_controller.py joints_vel_controller.py adeept_VK_server.py switch_control.py `.
+** To run 4DOF FK/IK: add adeept_FK_server.py and adeept_IK_server.py
 
 ## Launch the Adeept Robot
 
@@ -53,13 +54,13 @@ To launch all the command nodes:
 @TODO
 
 For the robot kinematics, the code Implemented two nodes including a forward kinematic node and a connector. After opening all the nodes, there will be some services. The first node provide inverse kinematic and forward kinematic calculation.
-
+** These two services are implemented and working
 `rosservice call inv_kin x, y, z, phi, theta, psi` 
 
-`rosservice call for_kin q1, q2, d3 `
+`rosservice call for_kin q1, q2, q3, q4
 
 The connector builds bridges for connecting gazebo robot and kinematic nodes. The service it provides does not need any input but requires that the robot in gazebo is working. It takes the pose/joint variables of the robot in gazebo and calls `compute_ik`/`compute_fk` to compute the result. It will give both the computed joint variables/pose result and gazebo joint variables/pose data for comparison. If the error is less than 0.01, one could confirm that the nodes are working correctly.
-
+** Needs to be tested with Gazebo for new forward/ inverse kinematics services
 `rosservice call check_ik` 
 
 `rosservice call check_fk` 
