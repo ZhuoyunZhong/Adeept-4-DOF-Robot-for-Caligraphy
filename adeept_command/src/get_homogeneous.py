@@ -1,13 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python 
 
 from adeept_command.srv import AdeeptHomoMatrix, AdeeptHomoMatrixResponse
 import numpy
 from helper import np2ma
-
+import sys
 import rospy
+from math import pi
 
 
-## Assuming that the input is q1 q2 q3 the output should be x y z phi theta psi
 def homogeneous_A(a1, alph1, d1, theta1):
     A = numpy.array([[numpy.cos(theta1), (numpy.sin(theta1)*-1) * numpy.cos(alph1), numpy.sin(theta1) * numpy.sin(alph1), a1 * numpy.cos(theta1)],
                       [numpy.sin(theta1), numpy.cos(theta1) * numpy.cos(alph1), (numpy.cos(theta1)*-1) * numpy.sin(alph1), a1 * numpy.sin(theta1)],
@@ -16,28 +16,49 @@ def homogeneous_A(a1, alph1, d1, theta1):
     return A
 
 
-def handle_homogeneous_matrix(req):
+def handle_homogeneous_matrix(req):    
+    # Robot dimensions
+    l1 = 100
+    l2 = 65
+    l3 = 70
+    l4 = 66.5
+    # pen length adjustment
+    pen = 0
+
     ##_---------------------- DH Parameters----------------------------------------
-    a1 = .425
-    alph1 = 0
-    d1 = .55
+
+    a1 = 0
+    alph1 = pi/2
+    d1 = l1
     theta1 = req.q1
 
-    a2 = .345
-    alph2 = 3.14
+    a2 = l2
+    alph2 = pi
     d2 = 0
-    theta2 = req.q2
+    theta2 = req.q2+pi/2
 
     a3 = 0
-    alph3 = 0
-    d3 = req.q3  + .11
-    theta3 = 0
+    alph3 = pi/2
+    d3 = 0
+    theta3 = req.q3+pi
+
+    a4 = 0
+    alph4 = 0
+    d4 = l3
+    theta4 = req.q4
+
+    a5 = 13+pen
+    alph5 = 0
+    d5 = l4
+    theta5 = 0
 
     A1 = np2ma(homogeneous_A(a1, alph1, d1, theta1))
     A2 = np2ma(homogeneous_A(a2, alph2, d2, theta2))
     A3 = np2ma(homogeneous_A(a3, alph3, d3, theta3))
+    A4 = np2ma(homogeneous_A(a4, alph4, d4, theta4))
+    A5 = np2ma(homogeneous_A(a5, alph5, d5, theta5))
+    return AdeeptHomoMatrixResponse(A1, A2, A3, A4, A5)
 
-    return AdeeptHomoMatrixResponse(A1, A2, A3)
 
 
 def get_homogeneous():
