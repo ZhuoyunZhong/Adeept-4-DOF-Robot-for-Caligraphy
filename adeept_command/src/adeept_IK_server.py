@@ -17,7 +17,7 @@ def handle_IK(req):
     # Robot dimension
     pen = 13
     link3d = 65
-    link4d = 136.5
+    link4d = 121.5
     # Input Coordinate
     x = req.x
     y = req.y
