@@ -20,7 +20,7 @@ def handle_homogeneous_matrix(req):
     # Robot dimensions
     l1 = 100
     l2 = 65
-    l3 = 70
+    l3 = 55
     l4 = 66.5
     # pen length adjustment
     pen = 0
