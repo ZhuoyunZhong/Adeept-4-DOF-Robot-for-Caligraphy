@@ -19,6 +19,9 @@ def handle_joint_ref(req):
     elif req.joint_name == 'joint3':
         pub3.publish(req.ref)
         return SetJointRefResponse(True)
+    elif req.joint_name == 'joint4':
+        pub4.publish(req.ref)
+        return SetJointRefResponse(True)
 
     else:
         rospy.loginfo("Input Joint Name Invalid")
@@ -27,9 +30,9 @@ def handle_joint_ref(req):
 
 def handle_cartesian_ref(req):
     # Perform inverse kinematics
-    rospy.wait_for_service('inv_kin')
+    rospy.wait_for_service('adeept/inv_kin')
     try:
-        inv_kinematic = rospy.ServiceProxy('inv_kin', AdeeptKinIK)
+        inv_kinematic = rospy.ServiceProxy('adeept/inv_kin', AdeeptKinIK)
         res = inv_kinematic(req.x, req.y, req.z, 0, 0, 0)
     except rospy.ServiceException, e:
         print "Service call failed: %s"%e
@@ -39,6 +42,7 @@ def handle_cartesian_ref(req):
         pub1.publish(res.q1)
         pub2.publish(res.q2)
         pub3.publish(res.q3)
+        pub4.publish(res.q4)
         return SetCartesianPosResponse(True)
     
     print "IK failed, the coordinate provided may be invalid."
@@ -52,10 +56,11 @@ def joints_pos_controller():
     s1 = rospy.Service('set_joint_pos_ref', SetJointRef, handle_joint_ref)
     s2 = rospy.Service('set_cartesian_pos_ref', SetCartesianPos, handle_cartesian_ref)
 
-    global pub1, pub2, pub3
+    global pub1, pub2, pub3, pub4
     pub1 = rospy.Publisher('/adeept/joint1_position_controller/command', Float64, queue_size=1)
     pub2 = rospy.Publisher('/adeept/joint2_position_controller/command', Float64, queue_size=1)
     pub3 = rospy.Publisher('/adeept/joint3_position_controller/command', Float64, queue_size=1)
+    pub4 = rospy.Publisher('/adeept/joint4_position_controller/command', Float64, queue_size=1)
     
     rospy.spin()
 

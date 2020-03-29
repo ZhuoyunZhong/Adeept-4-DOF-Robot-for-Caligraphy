@@ -41,16 +41,12 @@ After launching, one can try to control the robot by
 
 `rostopic pub -1 /adeept/joint1_position_controller/command std_msgs/Float64 "data: 0.5"`
 
-@ Not recommended until all the nodes are implemented and working
-
 To launch all the command nodes:
 
 `roslaunch adeept_command command.launch`
 
 
 ## Project Detail
-
-@TODO
 
 For the robot kinematics, the code Implemented two nodes including a forward kinematic node and a connector. After opening all the nodes, there will be some services. The first node provide inverse kinematic and forward kinematic calculation.
 
@@ -72,15 +68,7 @@ In terms of the velocity kinematic part, codes for forward and inverse velocity 
 
 `rosservice call vel_inv_kin q1, q2, q3, x, y, z, Vx, Vy, Vz, Wx, Wy, Wz` 
 
-`rosservice call vel_for_kin q1, q2, q3, q1_dot, q2_dot, q3_dot `
-
-@Maybe possible to implement (not exist in previous codes)
-
-The connector could also check if the nodes of velocity kinematic is working correctly.
-
-`rosservice call check_vel_inv`
-
-`rosservice call check_vel_for`
+`rosservice call vel_for_kin q1, q2, q3, q1_dot, q2_dot, q3_dot`
 
 ---
 
@@ -88,19 +76,21 @@ Also, the code implemented position and velocity controllers to perform joint mo
 
 To give a reference position to the PID controller of joint 1:
 
-`rosservice call set_joint_pos_ref '{joint_name: joint1, ref: 0.2}'`  
+`rosservice call set_joint_pos_ref '{joint_name: joint1, ref: 1.0}'`  
 
 One should be able to see the joint 1 moves to the desired position.
 
 The default controller of the robot is the position controller. In order to use a velocity controller, we need to use `controller manager`of ROS to switch from position controller to velocity controller.
 
-`rosservice call /adeept/controller_manager/switch_controller '{start_controllers: [joint1_velocity_controller], stop_controllers: [joint1_position_controller], strictness: 2}`
+`rosservice call /adeept/controller_manager/switch_controller '{start_controllers: [joint1_velocity_controller], stop_controllers: [joint1_position_controller], strictness: 2, start_asap: True, timeout: 2.0}`
 
 To give a reference speed to the velocity PID controller:
 
-`rosservice call set_joint_vel_ref '{joint_name: joint1, ref: 1}'`  
+`rosservice call set_joint_vel_ref '{joint_name: joint1, ref: 0.1}'`  
 
 One should be able to see the joint 1 moves at desired speed.
+
+@TODO
 
 We tuned the parameters and changed the PID values in the file `adeept_control/config/adeept_control.yaml` as follows:
 
@@ -133,6 +123,8 @@ As mentioned above, the robot could move following given joint velocity or posit
 
 `rosservice call set_joint_vel_ref 'joint_name' vel_ref` 
 
+@TODO
+
 Now combined with inverse kinematics, it could also find its way given a desired world coordinates or desired Cartesian velocity.
 
 `rosservice call set_cartesian_pos_ref x y z` 
@@ -143,7 +135,7 @@ Noted that if the robot could not go to an invalid coordinates (x, y, z), it wou
 
 A valid example would be:
 
-`rosservice call set_cartesian_pos_ref "{x: 0.1, y: 0.0, z: 0.14}"` `
+`rosservice call set_cartesian_pos_ref "{x: 0.1, y: 0.07, z: 0.152}"` `
 
 `rosservice call switch_control 'p2v'`
 

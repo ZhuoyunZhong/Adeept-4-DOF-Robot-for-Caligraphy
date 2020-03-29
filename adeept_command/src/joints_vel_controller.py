@@ -21,6 +21,9 @@ def handle_joint_ref(req):
     elif req.joint_name == 'joint3':
         pub3.publish(req.ref)
         return SetJointRefResponse(True)
+    elif req.joint_name == 'joint4':
+        pub4.publish(req.ref)
+        return SetJointRefResponse(True)
 
     else:
         rospy.loginfo("Input Joint Name Invalid")
@@ -29,15 +32,15 @@ def handle_joint_ref(req):
 
 def handle_cartesian_ref(req):
     # Perform inverse kinematics
-    rospy.wait_for_service('vel_inv_kin')
+    rospy.wait_for_service('adeept/vel_inv_kin')
     flag = True
 
     timeout = time.time() + 3   # Set 3 seconds
     while flag:
         joints = acquire_joints()
         try:
-            vel_inv_kinematic = rospy.ServiceProxy('vel_inv_kin', AdeeptVelIK)
-            res = vel_inv_kinematic(joints[0], joints[1], joints[2],\
+            vel_inv_kinematic = rospy.ServiceProxy('adeept/vel_inv_kin', AdeeptVelIK)
+            res = vel_inv_kinematic(joints[0], joints[1], joints[2], joints[3],\
                                     req.Vx, req.Vy, req.Vz, req.Wx,\
                                     req.Wy, req.Wz)
         except rospy.ServiceException, e:
@@ -48,6 +51,7 @@ def handle_cartesian_ref(req):
             pub1.publish(res.q1_dot)
             pub2.publish(res.q2_dot)
             pub3.publish(res.q3_dot)
+            pub4.publish(res.q4_dot)
         else:
             flag = False
 
@@ -63,6 +67,7 @@ def handle_cartesian_ref(req):
     pub1.publish(0)
     pub2.publish(0)
     pub3.publish(0)
+    pub4.publish(0)
     return SetCartesianVelResponse(flag)
     
 
@@ -73,12 +78,11 @@ def joints_vel_controller():
     s1 = rospy.Service('set_joint_vel_ref', SetJointRef, handle_joint_ref)
     s2 = rospy.Service('set_cartesian_vel_ref', SetCartesianVel, handle_cartesian_ref)
 
-    global pub1, pub2, pub3
+    global pub1, pub2, pub3, pub4
     pub1 = rospy.Publisher('/adeept/joint1_velocity_controller/command', Float64, queue_size=1)
     pub2 = rospy.Publisher('/adeept/joint2_velocity_controller/command', Float64, queue_size=1)
     pub3 = rospy.Publisher('/adeept/joint3_velocity_controller/command', Float64, queue_size=1)
-    
-    
+    pub4 = rospy.Publisher('/adeept/joint4_velocity_controller/command', Float64, queue_size=1)
 
     rospy.spin()
 

@@ -16,17 +16,23 @@ def handle_switch(req):
         if req.command == 'p2v': # Position -> Velocity
             ret1 = switch_controller(['joint1_velocity_controller',
                                       'joint2_velocity_controller',
-                                      'joint3_velocity_controller'], 
+                                      'joint3_velocity_controller',
+                                      'joint4_velocity_controller'], 
                                      ['joint1_position_controller',
                                       'joint2_position_controller',
-                                      'joint3_position_controller'], 2)
+                                      'joint3_position_controller',
+                                      'joint4_position_controller'], 
+                                      2, True, 2.0)
         elif req.command == 'v2p': # Velocity -> Position
             ret2 = switch_controller(['joint1_position_controller',
                                       'joint2_position_controller',
-                                      'joint3_position_controller'], 
+                                      'joint3_position_controller',
+                                      'joint4_position_controller'], 
                                      ['joint1_velocity_controller',
                                       'joint2_velocity_controller',
-                                      'joint3_velocity_controller'], 2)
+                                      'joint3_velocity_controller',
+                                      'joint4_velocity_controller'], 
+                                      2, True, 2.0)
         else:
             print 'Input should be "p2v" or "v2p"'
             return SwitchControlResponse(False)
