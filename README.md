@@ -105,8 +105,6 @@ To give a reference speed to the velocity PID controller:
 
 One should be able to see the joint 1 moves at desired speed.
 
-@TODO
-
 We tuned the parameters and changed the PID values in the file `adeept_control/config/adeept_control.yaml` as follows:
 
 | Controller | Kp   | Ki   | Kd   |
