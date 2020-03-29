@@ -9,7 +9,7 @@
   <node name="kin_server" pkg="adeept_command" type="adeept_kin_server.py"/>
 
   <!-- load velocity kinematics -->
-  <node name="vel_kin_server" pkg="adeept_command" type="adeept_VK_server.py"/>
+  <node name="vel_kin_server" pkg="adeept_command" type="adeept_vk_server.py"/>
 
   <!-- Load controller -->
   <node name="joints_pos_controller" pkg="adeept_command" type="joints_pos_controller.py"/>

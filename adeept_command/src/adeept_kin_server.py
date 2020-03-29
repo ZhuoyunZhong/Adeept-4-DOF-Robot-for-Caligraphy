@@ -23,6 +23,14 @@ def handle_inverse_kinematics(req):
     theta = req.theta
     psi = req.psi
 
+    # TODO
+    # Ask for service but does not give a specific orientation
+    if phi == 0 and theta == 0 and psi == 0:
+        # Remain horizontal
+        phi = atan2(y, x)
+        theta = pi/2 
+        psi = 0
+    
     cphi = cos(phi)
     sphi = sin(phi)
     ctheta = cos(theta)
@@ -32,7 +40,6 @@ def handle_inverse_kinematics(req):
     R_04 = numpy.array([[cphi*ctheta, -sphi*cpsi+cphi*stheta*spsi, sphi*spsi+cphi*stheta*cpsi],
                         [sphi*ctheta, cphi*cpsi+sphi*stheta*spsi, -cphi*spsi+sphi*stheta*cpsi],
                         [-stheta, ctheta*spsi, ctheta*cpsi]])
-    print(R_04)
 
     try:
         # Calculate position of projection onto axis of rotation of joint 4: 
@@ -40,7 +47,6 @@ def handle_inverse_kinematics(req):
         wrist_x = round(x - pen*(cphi*ctheta), 4)
         wrist_y = round(y - pen*(sphi*ctheta), 4)
         wrist_z = round(z + pen*stheta, 4)
-        print(wrist_x, wrist_y, wrist_z)
 
         # May need to adjust this for quadrant based on joint limits
         q1 = round(atan2(wrist_y, wrist_x), 3)
@@ -79,19 +85,10 @@ def handle_inverse_kinematics(req):
         R_03_2 = numpy.matmul(numpy.matmul(A1_2, A2_2), A3_2)[0:3, 0:3]
 
         A4 = ma2np(homo_matrix_2.A4)[0:3, 0:3]
-        print(numpy.matmul(R_03_2, A4))
 
         # Determine which solution matches the input pose
         R_34_1 = numpy.matmul(numpy.transpose(R_03_1), R_04)
         R_34_2 = numpy.matmul(numpy.transpose(R_03_2), R_04)
-
-        # For debug
-        print(R_03_1)
-        print(R_34_1)
-        print(q1, q2_1, q3_1, round(atan2(R_34_1[1, 0], R_34_1[0, 0]), 4))
-        print(R_03_2)
-        print(R_34_2)
-        print(q1, q2_2, q3_2, round(atan2(R_34_2[1, 0], R_34_2[0, 0]), 4))
 
         if abs(R_34_1[0, 2]) < 0.03 and abs(R_34_1[1, 2]) < 0.03:
             q4 = round(atan2(R_34_1[1, 0], R_34_1[0, 0]), 4)
@@ -104,7 +101,7 @@ def handle_inverse_kinematics(req):
         else:
             print("IK failed, something went wrong.")
             return AdeeptKinIKResponse(False, 0, 0, 0, 0)
-
+        print(q1, q2, q3, q4)
     except ValueError, e:
         print "IK failed, the coordinate x, y provided may be invalid: %s"%e
         return AdeeptKinIKResponse(False, 0, 0, 0, 0)
