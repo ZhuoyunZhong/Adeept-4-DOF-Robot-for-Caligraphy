@@ -1,4 +1,4 @@
-# Adeept-4-DOF-Robot-for-Caligraphy
+# 15Adeept-4-DOF-Robot-for-Caligraphy
 
 **Author**:  WPI RBE 501 2020 Spring Team: [Jessica  Herman](https://github.com/KatConroy57), [Xinxiao Li](https://github.com/thejose5), [Anqi Shen](https://github.com/joeyzhong90595), [Zhuoyun Zhong](https://github.com/joeyzhong90595).
 
@@ -111,14 +111,14 @@ We tuned the parameters and changed the PID values in the file `adeept_control/c
 
 | Controller | Kp   | Ki   | Kd   |
 | ---------- | ---- | ---- | ---- |
-| Joint1_pos | 10.0 | 0.0  | 0.0  |
-| Joint2_pos | 10.0 | 0.0  | 0.0  |
-| Joint3_pos | 10.0 | 0.0  | 0.0  |
-| Joint4_pos | 10.0 | 0.0  | 0.0  |
-| Joint1_vel | 10.0 | 0.0  | 0.0  |
-| Joint2_vel | 10.0 | 0.0  | 0.0  |
-| Joint3_vel | 10.0 | 0.0  | 0.0  |
-| Joint4_vel | 10.0 | 0.0  | 0.0  |
+| Joint1_pos | 20.0 | 2.0  | 1.0  |
+| Joint2_pos | 15.0 | 3.0  | 1.0  |
+| Joint3_pos | 15.0 | 3.0  | 1.0  |
+| Joint4_pos | 15.0 | 3.0  | 1.0  |
+| Joint1_vel | 30.0 | 1.0  | 0.0  |
+| Joint2_vel | 30.0 | 1.0  | 0.0  |
+| Joint3_vel | 30.0 | 1.0  | 0.0  |
+| Joint4_vel | 30.0 | 1.0  | 0.0  |
 
 To tune the value and see the result in real time, suggest using `rqt`. More detail of tunning process can refer to [Gazebo Control Tutorial](http://gazebosim.org/tutorials?tut=ros_control).
 

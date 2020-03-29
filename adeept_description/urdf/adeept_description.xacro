@@ -27,12 +27,12 @@
       <mass
         value="0.22" />
       <inertia
-        ixx="1.42E-03"
+        ixx="1.42E-02"
         ixy="0"
         ixz="0"
-        iyy="1.20E-03"
+        iyy="1.20E-02"
         iyz="0"
-        izz="2.54E-03" />
+        izz="2.54E-02" />
     </inertial>
     <visual>
       <origin
@@ -77,12 +77,12 @@
       <mass
         value="0.150" />
       <inertia
-        ixx="4.48E-03"
+        ixx="4.48E-02"
         ixy="0"
         ixz="0"
-        iyy="4.15E-03"
+        iyy="4.15E-02"
         iyz="0"
-        izz="6.16E-03" />
+        izz="6.16E-02" />
     </inertial>
     <visual>
       <origin
@@ -120,7 +120,7 @@
       lower="-1.5708"
       upper="1.5708"
       effort="100.0"
-      velocity="0.5" />
+      velocity="1.0" />
     <dynamics 
       damping="0.2" 
       friction="0.1" />
@@ -135,12 +135,12 @@
       <mass
         value="0.057" />
       <inertia
-        ixx="1.14E-03"
+        ixx="1.14E-02"
         ixy="0"
         ixz="0"
-        iyy="3.62E-02"
+        iyy="3.62E-01"
         iyz="0"
-        izz="3.73E-02" />
+        izz="3.73E-01" />
     </inertial>
     <visual>
       <origin
@@ -178,7 +178,7 @@
       lower="-2.70389"
       upper="0.43611"
       effort="100.0"
-      velocity="0.5" />
+      velocity="1.0" />
     <dynamics 
       damping="0.2" 
       friction="0.1" />
@@ -193,12 +193,12 @@
       <mass
         value="0.076" />
       <inertia
-        ixx="5.58E-03"
+        ixx="5.58E-02"
         ixy="0"
         ixz="0"
-        iyy="2.40E-02"
+        iyy="2.40E-01"
         iyz="0"
-        izz="2.44E-02" />
+        izz="2.44E-01" />
     </inertial>
     <visual>
       <origin
@@ -236,7 +236,7 @@
       lower="-2.70389"
       upper="0.43611"
       effort="100.0"
-      velocity="0.5" />
+      velocity="1.0" />
     <dynamics 
       damping="0.2" 
       friction="0.1" />
@@ -251,12 +251,12 @@
       <mass
         value="0.020" />
       <inertia
-        ixx="4.39E-03"
+        ixx="4.39E-02"
         ixy="0"
         ixz="0"
-        iyy="9.30E-03"
+        iyy="9.30E-02"
         iyz="0"
-        izz="1.27E-02" />
+        izz="1.27E-01" />
     </inertial>
     <visual>
       <origin
@@ -294,7 +294,7 @@
       lower="-1.48278"
       upper="1.65722"
       effort="100.0"
-      velocity="0.5" />
+      velocity="1.0" />
     <dynamics 
       damping="0.2" 
       friction="0.1" />
@@ -309,12 +309,12 @@
       <mass
         value="0.01" />
       <inertia
-        ixx="4E-3"
+        ixx="4E-2"
         ixy="0"
         ixz="0"
-        iyy="4E-3"
+        iyy="4E-2"
         iyz="0"
-        izz="4E-3" />
+        izz="4E-2" />
     </inertial>
     <visual>
       <origin
@@ -350,7 +350,7 @@
       lower="0"
       upper="0"
       effort="100.0"
-      velocity="0.5" />
+      velocity="1.0" />
     <dynamics 
       damping="0.2" 
       friction="0.1" />
