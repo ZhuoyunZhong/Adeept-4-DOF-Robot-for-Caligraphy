@@ -109,10 +109,10 @@ We tuned the parameters and changed the PID values in the file `adeept_control/c
 
 | Controller | Kp   | Ki   | Kd   |
 | ---------- | ---- | ---- | ---- |
-| Joint1_pos | 20.0 | 2.0  | 1.0  |
-| Joint2_pos | 15.0 | 3.0  | 1.0  |
-| Joint3_pos | 15.0 | 3.0  | 1.0  |
-| Joint4_pos | 15.0 | 3.0  | 1.0  |
+| Joint1_pos | 20.0 | 2.0  | 6.0  |
+| Joint2_pos | 15.0 | 3.0  | 5.0  |
+| Joint3_pos | 15.0 | 3.0  | 4.0  |
+| Joint4_pos | 15.0 | 3.0  | 3.0  |
 | Joint1_vel | 30.0 | 1.0  | 0.0  |
 | Joint2_vel | 30.0 | 1.0  | 0.0  |
 | Joint3_vel | 30.0 | 1.0  | 0.0  |
