@@ -300,21 +300,21 @@
       friction="0.1" />
   </joint>
 
-    <link
+  <link
     name="end">
     <inertial>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <mass
-        value="0.001" />
+        value="0.01" />
       <inertia
-        ixx="4E-10"
+        ixx="4E-5"
         ixy="0"
         ixz="0"
-        iyy="4E-10"
+        iyy="4E-5"
         iyz="0"
-        izz="4E-10" />
+        izz="4E-5" />
     </inertial>
     <visual>
       <origin
@@ -336,7 +336,7 @@
   </link>
   <joint
     name="Joint_end"
-    type="fixed">
+    type="prismatic">
     <origin
       xyz="0.013 0 0.0665"
       rpy="0 0 0" />
@@ -346,6 +346,14 @@
       link="end" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="100.0"
+      velocity="0.5" />
+    <dynamics 
+      damping="0.2" 
+      friction="0.1" />
   </joint>
 
   <!-- Controller -->

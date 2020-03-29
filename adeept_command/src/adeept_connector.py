@@ -16,11 +16,11 @@ def check_ang(a1, a2):
     # convert to between 0 and 2pi
     a1 = a1 % 6.283 
     a2 = a2 % 6.283
-    if abs(a1-a2) < 0.01:
+    if abs(a1-a2) < 0.03:
 	same = True
     # To close the loop 0 -> 2pi -> 0
-    if a1 < 0.01 or a2 < 0.01 :
-	if abs(a1+a2-6.283) < 0.01:
+    if a1 < 0.03 or a2 < 0.03 :
+	if abs(a1+a2-6.283) < 0.03:
 	    same = True
     return same
 
@@ -29,41 +29,42 @@ def check_ang(a1, a2):
 def handle_check_ik(req):
     # Acquire robot state from gazebo
     gaze_x, gaze_y, gaze_z, gaze_phi, gaze_theta, gaze_psi = acquire_coordinates()
-    gaze_q1, gaze_q2, gaze_q3 = acquire_joints()
+    gaze_q1, gaze_q2, gaze_q3, gaze_q4 = acquire_joints()
 
     # Using inv_kin service to calculate joint values
-    rospy.wait_for_service('inv_kin')
+    rospy.wait_for_service('adeept/inv_kin')
     try:
-        inv_kinematic = rospy.ServiceProxy('inv_kin', AdeeptKinIK)
+        inv_kinematic = rospy.ServiceProxy('adeept/inv_kin', AdeeptKinIK)
         res = inv_kinematic(gaze_x, gaze_y, gaze_z, gaze_phi, gaze_theta, gaze_psi)
     except rospy.ServiceException, e:
         print "Service call failed: %s"%e
-    q1, q2, q3 = res.q1, res.q2, res.q3
+    q1, q2, q3, q4 = res.q1, res.q2, res.q3, res.q4
 
     # Judge
     correct = False
-    if check_ang(q1,gaze_q1) and check_ang(q2,gaze_q2) and abs(q3-gaze_q3)<0.01:
+    if check_ang(q1,gaze_q1) and check_ang(q2,gaze_q2) and \
+       check_ang(q3,gaze_q3) and check_ang(q4,gaze_q4):
 	correct = True
 
     # return both results to compare
     print "Check IK success: ", correct
-    return CheckKinIKResponse(gaze_q1, gaze_q2, gaze_q3, q1, q2, q3, correct)
+    return CheckKinIKResponse(gaze_q1, gaze_q2, gaze_q3, gaze_q4, q1, q2, q3, q4, correct)
 
 
 # Check if FK server is correct
 def handle_check_fk(req):
     # Acquire robot state from gazebo
     gaze_x, gaze_y, gaze_z, gaze_phi, gaze_theta, gaze_psi = acquire_coordinates()
-    gaze_q1, gaze_q2, gaze_q3 = acquire_joints()
+    gaze_q1, gaze_q2, gaze_q3, gaze_q4 = acquire_joints()
 
     # Using for_kin service to calculate end-of-effector coordinate
-    rospy.wait_for_service('for_kin')
+    rospy.wait_for_service('adeept/for_kin')
     try:
-        for_kinematic = rospy.ServiceProxy('for_kin', AdeeptKinFK)
-        res = for_kinematic(gaze_q1, gaze_q2, gaze_q3)
+        for_kinematic = rospy.ServiceProxy('adeept/for_kin', AdeeptKinFK)
+        res = for_kinematic(gaze_q1, gaze_q2, gaze_q3, gaze_q4)
     except rospy.ServiceException, e:
         print "Service call failed: %s"%e
-    x, y, z, phi, theta, psi = res.x, res.y, res.z, res.phi, res.theta, res.psi
+    x, y, z, psi, theta, phi = res.x, res.y, res.z, res.psi, res.theta, res.phi
 
     # Judge
     correct = False

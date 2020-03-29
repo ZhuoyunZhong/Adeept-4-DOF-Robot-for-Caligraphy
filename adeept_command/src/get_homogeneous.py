@@ -1,29 +1,30 @@
 #!/usr/bin/env python 
 
 from adeept_command.srv import AdeeptHomoMatrix, AdeeptHomoMatrixResponse
-import numpy
+from numpy import array, sin, cos
 from helper import np2ma
 import sys
 import rospy
 from math import pi
 
 
+# Compute Transform Matrix A
 def homogeneous_A(a1, alph1, d1, theta1):
-    A = numpy.array([[numpy.cos(theta1), (numpy.sin(theta1)*-1) * numpy.cos(alph1), numpy.sin(theta1) * numpy.sin(alph1), a1 * numpy.cos(theta1)],
-                      [numpy.sin(theta1), numpy.cos(theta1) * numpy.cos(alph1), (numpy.cos(theta1)*-1) * numpy.sin(alph1), a1 * numpy.sin(theta1)],
-                      [0, numpy.sin(alph1), numpy.cos(alph1), d1],
-                      [0, 0, 0, 1]])
+    A = array([[cos(theta1), (sin(theta1)*-1) * cos(alph1), sin(theta1) * sin(alph1), a1 * cos(theta1)],
+               [sin(theta1), cos(theta1) * cos(alph1), (cos(theta1)*-1) * sin(alph1), a1 * sin(theta1)],
+               [0, sin(alph1), cos(alph1), d1],
+               [0, 0, 0, 1]])
     return A
 
 
 def handle_homogeneous_matrix(req):    
     # Robot dimensions
-    l1 = 100
-    l2 = 65
-    l3 = 55
-    l4 = 66.5
+    l1 = 0.1
+    l2 = 0.065
+    l3 = 0.055
+    l4 = 0.0665
     # pen length adjustment
-    pen = 0
+    pen = 0.013 + 0
 
     ##_---------------------- DH Parameters----------------------------------------
 
@@ -47,7 +48,7 @@ def handle_homogeneous_matrix(req):
     d4 = l3
     theta4 = req.q4
 
-    a5 = 13+pen
+    a5 = pen
     alph5 = 0
     d5 = l4
     theta5 = 0
