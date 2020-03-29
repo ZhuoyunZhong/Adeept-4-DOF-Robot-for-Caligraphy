@@ -7,11 +7,10 @@ from adeept_command.srv import SwitchControl, SwitchControlResponse
 
 # Use controller manager to switch between velocity and position controller
 def handle_switch(req):
-    rospy.wait_for_service('/adeept/controller_manager/switch_controller')
-    
+    rospy.wait_for_service('controller_manager/switch_controller')
     try:
         switch_controller = rospy.ServiceProxy(
-                    '/adeept/controller_manager/switch_controller', SwitchController)
+                    'controller_manager/switch_controller', SwitchController)
         
         if req.command == 'p2v': # Position -> Velocity
             ret1 = switch_controller(['joint1_velocity_controller',
@@ -45,7 +44,7 @@ def handle_switch(req):
     
 def switch_control():
     rospy.init_node('switch_control_server')
-    s = rospy.Service('adeept/switch_control', SwitchControl, handle_switch)
+    s = rospy.Service('switch_control', SwitchControl, handle_switch)
 
     rospy.spin()
 

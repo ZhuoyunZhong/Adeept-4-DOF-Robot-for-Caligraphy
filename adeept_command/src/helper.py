@@ -9,9 +9,9 @@ from gazebo_msgs.srv import GetJointProperties, GetLinkState
 
 # Acquire gazebo joint variables
 def acquire_joints():
-    rospy.wait_for_service('gazebo/get_joint_properties')
+    rospy.wait_for_service('~/gazebo/get_joint_properties')
     try:
-        joints_properties = rospy.ServiceProxy('gazebo/get_joint_properties', GetJointProperties)
+        joints_properties = rospy.ServiceProxy('~/gazebo/get_joint_properties', GetJointProperties)
         joint1_properties = joints_properties("Joint_1")
         q1 = joint1_properties.position[0]
         joint2_properties = joints_properties("Joint_2")
@@ -29,9 +29,9 @@ def acquire_joints():
 
 # Acquire gazebo end of effector coordinate
 def acquire_coordinates():
-    rospy.wait_for_service('gazebo/get_link_state')
+    rospy.wait_for_service('~/gazebo/get_link_state')
     try:
-        coordinates_gene = rospy.ServiceProxy('gazebo/get_link_state', GetLinkState)
+        coordinates_gene = rospy.ServiceProxy('~/gazebo/get_link_state', GetLinkState)
         coordinates = coordinates_gene("end", "world")
 	# Position
 	x = coordinates.link_state.pose.position.x

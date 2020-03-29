@@ -32,9 +32,9 @@ def handle_check_ik(req):
     gaze_q1, gaze_q2, gaze_q3, gaze_q4 = acquire_joints()
 
     # Using inv_kin service to calculate joint values
-    rospy.wait_for_service('adeept/inv_kin')
+    rospy.wait_for_service('inv_kin')
     try:
-        inv_kinematic = rospy.ServiceProxy('adeept/inv_kin', AdeeptKinIK)
+        inv_kinematic = rospy.ServiceProxy('inv_kin', AdeeptKinIK)
         res = inv_kinematic(gaze_x, gaze_y, gaze_z, gaze_phi, gaze_theta, gaze_psi)
     except rospy.ServiceException, e:
         print "Service call failed: %s"%e
@@ -56,16 +56,15 @@ def handle_check_fk(req):
     # Acquire robot state from gazebo
     gaze_x, gaze_y, gaze_z, gaze_phi, gaze_theta, gaze_psi = acquire_coordinates()
     gaze_q1, gaze_q2, gaze_q3, gaze_q4 = acquire_joints()
-
+    
     # Using for_kin service to calculate end-of-effector coordinate
-    rospy.wait_for_service('adeept/for_kin')
     try:
-        for_kinematic = rospy.ServiceProxy('adeept/for_kin', AdeeptKinFK)
+        for_kinematic = rospy.ServiceProxy('for_kin', AdeeptKinFK)
         res = for_kinematic(gaze_q1, gaze_q2, gaze_q3, gaze_q4)
     except rospy.ServiceException, e:
         print "Service call failed: %s"%e
     x, y, z, psi, theta, phi = res.x, res.y, res.z, res.psi, res.theta, res.phi
-
+    
     # Judge
     correct = False
     if abs(x-gaze_x)<0.01 and abs(y-gaze_y)<0.01 and abs(z-gaze_z)<0.01 and \
@@ -82,8 +81,8 @@ def handle_check_fk(req):
 def adeept_connector():
     rospy.init_node('kin_connector')
 
-    s1 = rospy.Service('adeept/check_ik', CheckKinIK, handle_check_ik)
-    s2 = rospy.Service('adeept/check_fk', CheckKinFK, handle_check_fk)
+    s1 = rospy.Service('check_ik', CheckKinIK, handle_check_ik)
+    s2 = rospy.Service('check_fk', CheckKinFK, handle_check_fk)
 
     rospy.spin()
 

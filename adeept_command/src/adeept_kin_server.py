@@ -138,8 +138,8 @@ def handle_forward_kinematics(req):
 
 def adeept_kin_server():
     rospy.init_node('kin_server')
-    s = rospy.Service('adeept/for_kin', AdeeptKinFK, handle_forward_kinematics)
-    s = rospy.Service('adeept/inv_kin', AdeeptKinIK, handle_inverse_kinematics)
+    s = rospy.Service('for_kin', AdeeptKinFK, handle_forward_kinematics)
+    s = rospy.Service('inv_kin', AdeeptKinIK, handle_inverse_kinematics)
 
     rospy.spin()
 
