@@ -82,8 +82,8 @@ def handle_check_fk(req):
 def adeept_connector():
     rospy.init_node('kin_connector')
 
-    s1 = rospy.Service('check_ik', CheckKinIK, handle_check_ik)
-    s2 = rospy.Service('check_fk', CheckKinFK, handle_check_fk)
+    s1 = rospy.Service('adeept/check_ik', CheckKinIK, handle_check_ik)
+    s2 = rospy.Service('adeept/check_fk', CheckKinFK, handle_check_fk)
 
     rospy.spin()
 

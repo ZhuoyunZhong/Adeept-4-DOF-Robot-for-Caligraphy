@@ -53,8 +53,8 @@ def handle_cartesian_ref(req):
 def joints_pos_controller():
     rospy.init_node('joints_pos_controller')
 
-    s1 = rospy.Service('set_joint_pos_ref', SetJointRef, handle_joint_ref)
-    s2 = rospy.Service('set_cartesian_pos_ref', SetCartesianPos, handle_cartesian_ref)
+    s1 = rospy.Service('adeept/set_joint_pos_ref', SetJointRef, handle_joint_ref)
+    s2 = rospy.Service('adeept/set_cartesian_pos_ref', SetCartesianPos, handle_cartesian_ref)
 
     global pub1, pub2, pub3, pub4
     pub1 = rospy.Publisher('/adeept/joint1_position_controller/command', Float64, queue_size=1)
