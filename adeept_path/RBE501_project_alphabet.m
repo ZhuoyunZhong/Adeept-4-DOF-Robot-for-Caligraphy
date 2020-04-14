@@ -6,31 +6,31 @@ t_I = 1600; t_K = 4200; t_L = 2600; t_M = 4600;
 t_N = 3600; t_T = 3200; t_V = 2600; t_W = 4600;
 t_X = 3200; t_Y = 4200; t_Z = 3600;
 
-t_B = 5600; t_D = 3600;
-t_P = 3600; t_R = 5200;
+t_B = 5600; t_D = 3600; t_J = 2600;
+t_P = 3600; t_R = 5200; t_S = 4850; t_U = 3850;
 
 prev_pos = [0; 0; 0.5];
 figure('Name','Draw String HKLM');
 scatter3(0, 0, 0);
 hold on
-for t1 = 0: 25: t_B
-    curpos = drawB(0, 0, prev_pos, t1);
+for t1 = 0: 25: t_J
+    curpos = drawJ(0, 0, prev_pos, t1);
     scatter3(curpos(1),curpos(2),curpos(3));
-    if t1 == t_B
+    if t1 == t_J
         prev_pos = curpos;
     end
 end
-for t2 = 0: 25: t_D
-    curpos = drawD(4, 0, prev_pos, t2);
+for t2 = 0: 25: t_S
+    curpos = drawS(4, 0, prev_pos, t2);
     scatter3(curpos(1),curpos(2),curpos(3));
-    if t2 == t_D
+    if t2 == t_S
         prev_pos = curpos;
     end
 end
-for t3= 0: 25: t_P
-    curpos = drawP(8, 0, prev_pos, t3);
+for t3= 0: 25: t_U
+    curpos = drawU(8, 0, prev_pos, t3);
     scatter3(curpos(1),curpos(2),curpos(3));
-    if t3 == t_P
+    if t3 == t_U
         prev_pos = curpos;
     end
 end
@@ -337,6 +337,32 @@ function pos = drawI(x_offset, y_offset, prev_xyz, time)
     end
 end
 
+% letter 'J'
+function pos = drawJ(x_offset, y_offset, prev_xyz, time)
+    pos = [prev_xyz(1); prev_xyz(2); prev_xyz(3)];
+    if time < 500 % [2; 4; 0.5] move
+        pos(1) = prev_xyz(1) + (2 + x_offset - prev_xyz(1))/500 * time;
+        pos(2) = prev_xyz(2) + (4 + y_offset - prev_xyz(2))/500 * time;
+        pos(3) = prev_xyz(3) + (0.5 - prev_xyz(3))/500 * time;
+    elseif time < 550 % [2; 4; 0] down
+        pos(1) = x_offset + 2;
+        pos(2) = y_offset + 4;
+        pos(3) = 0.5 + (0 - 0.5)/50 * (time - 500);
+    elseif time < 1550 % [2; 1; 0] write
+        pos(1) = x_offset + 2;
+        pos(2) = y_offset + 4 + (1 - 4)/1000 * (time - 550);
+        pos(3) = 0;
+    elseif time < 2550 % [0; 1; 0] bottom-180 r = 1 c = (1 , 1)  write_curve
+        pos(1) = x_offset + 1 + cos((time - 1550) * pi / 1000) * 1;
+        pos(2) = y_offset + 1 - sin((time - 1550) * pi / 1000) * 1;
+        pos(3) = 0;
+    elseif time <= 2600 % [0; 1; 0.5] up
+        pos(1) = x_offset + 0;
+        pos(2) = y_offset + 1;
+        pos(3) = 0 + (0.5 - 0)/50 * (time - 2550);
+    end
+end
+
 % letter 'K'
 function pos = drawK(x_offset, y_offset, prev_xyz, time)
     pos = [prev_xyz(1); prev_xyz(2); prev_xyz(3)];
@@ -553,6 +579,52 @@ function pos = drawR(x_offset, y_offset, prev_xyz, time)
     end
 end
 
+% letter 'S'
+function pos = drawS(x_offset, y_offset, prev_xyz, time)
+    pos = [prev_xyz(1); prev_xyz(2); prev_xyz(3)];
+    if time < 500 % [2.707; 3.707; 0.5] move
+        pos(1) = prev_xyz(1) + (2.707 + x_offset - prev_xyz(1))/500 * time;
+        pos(2) = prev_xyz(2) + (3.707 + y_offset - prev_xyz(2))/500 * time;
+        pos(3) = prev_xyz(3) + (0.5 - prev_xyz(3))/500 * time;
+    elseif time < 550 % [2.707; 3.707; 0] down
+        pos(1) = x_offset + 2.707;
+        pos(2) = y_offset + 3.707;
+        pos(3) = 0.5 + (0 - 0.5)/50 * (time - 500);
+    elseif time < 800 % [2; 4; 0] right-45 r = 1 c = (2,3)  write_curve
+        pos(1) = x_offset + 2 + cos(pi/4 + (time - 550) * pi / 1000) * 1;
+        pos(2) = y_offset + 3 + sin(pi/4 + (time - 550) * pi / 1000) * 1;
+        pos(3) = 0;
+    elseif time < 1300 % [1; 4; 0] write
+        pos(1) = x_offset + 2 + (1 - 2)/500 * (time - 800);
+        pos(2) = y_offset + 4;
+        pos(3) = 0;
+    elseif time < 2300 % [1; 2; 0] left-180 r = 1 c = (1,3)  write_curve
+        pos(1) = x_offset + 1 - sin((time - 1300) * pi / 1000) * 1;
+        pos(2) = y_offset + 3 + cos((time - 1300) * pi / 1000) * 1;
+        pos(3) = 0;
+    elseif time < 2800 % [2; 2; 0] write
+        pos(1) = x_offset + 1 + (2 - 1)/500 * (time - 2300);
+        pos(2) = y_offset + 2;
+        pos(3) = 0;
+    elseif time < 3800 % [2; 0; 0] right-180 r = 1 c = (2,1)  write_curve
+        pos(1) = x_offset + 2 + sin((time - 2800) * pi / 1000) * 1;
+        pos(2) = y_offset + 1 + cos((time - 2800) * pi / 1000) * 1;
+        pos(3) = 0;
+    elseif time < 4300 % [1; 0; 0] write
+        pos(1) = x_offset + 2 + (1 - 2)/500 * (time - 3800);
+        pos(2) = y_offset + 0;
+        pos(3) = 0;
+    elseif time < 4800 % [0; 1; 0] left-90 r = 1 c = (1,1)  write_curve
+        pos(1) = x_offset + 1 - sin((time - 4300) * pi / 1000) * 1;
+        pos(2) = y_offset + 1 - cos((time - 4300) * pi / 1000) * 1;
+        pos(3) = 0;
+    elseif time <= 4850 % [0; 1; 0.5] up
+        pos(1) = x_offset + 0;
+        pos(2) = y_offset + 1;
+        pos(3) = 0 + (0.5 - 0)/50 * (time - 4800);
+    end
+end
+
 % letter 'T'
 function pos = drawT(x_offset, y_offset, prev_xyz, time)
     pos = [prev_xyz(1); prev_xyz(2); prev_xyz(3)];
@@ -588,6 +660,44 @@ function pos = drawT(x_offset, y_offset, prev_xyz, time)
         pos(1) = x_offset + 1.5;
         pos(2) = y_offset + 0;
         pos(3) = 0 + (0.5 - 0)/50 * (time - 3150);
+    end
+end
+
+% letter 'U'
+function pos = drawU(x_offset, y_offset, prev_xyz, time)
+    pos = [prev_xyz(1); prev_xyz(2); prev_xyz(3)];
+    if time < 500 % [0; 4; 0.5] move
+        pos(1) = prev_xyz(1) + (0 + x_offset - prev_xyz(1))/500 * time;
+        pos(2) = prev_xyz(2) + (4 + y_offset - prev_xyz(2))/500 * time;
+        pos(3) = prev_xyz(3) + (0.5 - prev_xyz(3))/500 * time;
+    elseif time < 550 % [0; 4; 0] down
+        pos(1) = x_offset + 0;
+        pos(2) = y_offset + 4;
+        pos(3) = 0.5 + (0 - 0.5)/50 * (time - 500);
+    elseif time < 1550 % [0; 1; 0] write
+        pos(1) = x_offset + 0;
+        pos(2) = y_offset + 4 + (1 - 4)/1000 * (time - 550);
+        pos(3) = 0;
+    elseif time < 2050 % [1; 0; 0] left-90 r = 1 c = (1,1)  write_curve
+        pos(1) = x_offset + 1 - cos((time - 1550) * pi / 1000) * 1;
+        pos(2) = y_offset + 1 - sin((time - 1550) * pi / 1000) * 1;
+        pos(3) = 0;
+    elseif time < 2300 % [1.5; 0; 0] write
+        pos(1) = x_offset + 1 + (1.5 - 1)/250 * (time - 2050);
+        pos(2) = y_offset + 0;
+        pos(3) = 0;
+    elseif time < 2800 % [2.5; 1; 0] right-90 r = 1 c = (1.5,1)  write_curve
+        pos(1) = x_offset + 1.5 + sin((time - 2300) * pi / 1000) * 1;
+        pos(2) = y_offset + 1 - cos((time - 2300) * pi / 1000) * 1;
+        pos(3) = 0;
+    elseif time < 3800 % [2.5; 4; 0] write
+        pos(1) = x_offset + 2.5;
+        pos(2) = y_offset + 1 + (4 - 1)/1000 * (time - 2800);
+        pos(3) = 0;
+    elseif time <= 3850 % [2.5; 4; 0.5] up
+        pos(1) = x_offset + 2.5;
+        pos(2) = y_offset + 4;
+        pos(3) = 0 + (0.5 - 0)/50 * (time - 3800);
     end
 end
 
