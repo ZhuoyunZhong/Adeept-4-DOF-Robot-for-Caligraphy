@@ -27,7 +27,7 @@ def handle_draw_alphabet(req):
     
     # Get waypoint from trajectory function
     waypoints = get_alphabet_trajectory(alphabet)
-    for waypoint in waypoints.T:
+    for waypoint in waypoints:
         # Using position controller to move the robot
         rospy.wait_for_service('set_cartesian_pos_ref')
         try:
