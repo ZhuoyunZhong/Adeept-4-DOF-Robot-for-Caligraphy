@@ -25,7 +25,9 @@ To use Arduino (Hardware) in ROS, follow the instructions to [install Arduino ID
 1. Clone this repository under **catkin_ws/src/**
 2. Compile under **catkin_ws**: `catkin_make`
 3. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_command/src/**
-4. Give python files permission: `chmod +x get_homogeneous.py adeept_connector.py adeept_kin_server.py joints_pos_controller.py joints_vel_controller.py adeept_VK_server.py switch_control.py `.
+4. Give following python files permission: `chmod +x get_homogeneous.py adeept_connector.py adeept_kin_server.py joints_pos_controller.py joints_vel_controller.py adeept_VK_server.py switch_control.py `.
+5. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_path/src/**
+6. Give following python files permission: `chmod +x draw_alphabet.py`
 
 ## Launch the Adeept Robot
 
@@ -149,6 +151,12 @@ A valid example would be:
 `rosservice call adeept/set_cartesian_vel_ref "{Vx: 0, Vy: 0, Vz: 0, Wx: 0, Wy: 0, Wz: 0.1}"`
 
 One should be able to see that the robot moves to (0.1, 0, 0.14) in the world coordinate. Then it moves around the +z direction for 3 seconds at a speed of 0.1.
+
+---
+
+To draw an alphabet:
+
+`rosservice call adeept/draw_alphabet 'A'`
 
 ## Node graph:
 
