@@ -24,9 +24,9 @@ from adeept_command.srv import SetCartesianPos
 # Call back
 def handle_draw_alphabet(req):
     alphabet = req.alphabet
-    
     # Get waypoint from trajectory function
-    waypoints = get_alphabet_trajectory(alphabet)
+    x, y, z, psi, theta, phi = acquire_coordinates()
+    waypoints = get_alphabet_trajectory(alphabet, [x, y, z])
     for waypoint in waypoints:
         # Using position controller to move the robot
         rospy.wait_for_service('set_cartesian_pos_ref')
