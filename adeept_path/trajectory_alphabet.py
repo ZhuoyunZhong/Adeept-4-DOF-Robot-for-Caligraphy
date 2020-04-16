@@ -1,57 +1,57 @@
 
 
-def parse_letter(letter, prev_pos, offset, rate):
-    if letter == 'A':
+def parse_alphabet(alphabet, prev_pos, offset, rate):
+    if alphabet == 'A':
         return drawA(prev_pos, offset, rate)
-    elif letter == 'B':
+    elif alphabet == 'B':
         return drawB(prev_pos, offset)
-    elif letter == 'C':
+    elif alphabet == 'C':
         return drawC(prev_pos, offset)
-    elif letter == 'D':
+    elif alphabet == 'D':
         return drawD(prev_pos, offset)
-    elif letter == 'E':
+    elif alphabet == 'E':
         return drawE(prev_pos, offset)
-    elif letter == 'F':
+    elif alphabet == 'F':
         return drawF(prev_pos, offset)
-    elif letter == 'G':
+    elif alphabet == 'G':
         return drawG(prev_pos, offset)
-    elif letter == 'H':
+    elif alphabet == 'H':
         return drawH(prev_pos, offset)
-    elif letter == 'I':
+    elif alphabet == 'I':
         return drawI(prev_pos, offset)
-    elif letter == 'J':
+    elif alphabet == 'J':
         return drawJ(prev_pos, offset)
-    elif letter == 'K':
+    elif alphabet == 'K':
         return drawK(prev_pos, offset)
-    elif letter == 'L':
+    elif alphabet == 'L':
         return drawL(prev_pos, offset)
-    elif letter == 'M':
+    elif alphabet == 'M':
         return drawM(prev_pos, offset)
-    elif letter == 'N':
+    elif alphabet == 'N':
         return drawN(prev_pos, offset)
-    elif letter == 'O':
+    elif alphabet == 'O':
         return drawO(prev_pos, offset)
-    elif letter == 'P':
+    elif alphabet == 'P':
         return drawP(prev_pos, offset)
-    elif letter == 'Q':
+    elif alphabet == 'Q':
         return drawQ(prev_pos, offset)
-    elif letter == 'R':
+    elif alphabet == 'R':
         return drawR(prev_pos, offset)
-    elif letter == 'S':
+    elif alphabet == 'S':
         return drawS(prev_pos, offset)
-    elif letter == 'T':
+    elif alphabet == 'T':
         return drawT(prev_pos, offset)
-    elif letter == 'U':
+    elif alphabet == 'U':
         return drawU(prev_pos, offset)
-    elif letter == 'V':
+    elif alphabet == 'V':
         return drawV(prev_pos, offset)
-    elif letter == 'W':
+    elif alphabet == 'W':
         return drawW(prev_pos, offset)
-    elif letter == 'X':
+    elif alphabet == 'X':
         return drawX(prev_pos, offset)
-    elif letter == 'Y':
+    elif alphabet == 'Y':
         return drawY(prev_pos, offset)
-    elif letter == 'Z':
+    elif alphabet == 'Z':
         return drawZ(prev_pos, offset)
 
 
