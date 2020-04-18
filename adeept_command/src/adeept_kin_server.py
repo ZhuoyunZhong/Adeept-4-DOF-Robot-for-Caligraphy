@@ -53,6 +53,7 @@ def handle_inverse_kinematics(req):
             q2 = q2_2
             q3 = q3_2
           q4 = 0
+          q3 = q3-atan2(pen,link4d)
       except ValueError, e:
           print "IK failed, the coordinate x, y provided may be invalid: %s"%e
           return AdeeptKinIKResponse(False, 0, 0, 0, 0)
