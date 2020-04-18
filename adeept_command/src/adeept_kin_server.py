@@ -26,11 +26,12 @@ def handle_inverse_kinematics(req):
     # TODO
     # Ask for service but does not give a specific orientation
     if phi == 0 and theta == 0 and psi == 0:
-      link4hypotenuse = sqrt(pen**2+link4d**2
+      print "entered new loop"
+      link4hypotenuse = sqrt(pen**2+link4d**2)
       try:
   
           q1 = round(atan2(y, x),4)
-  
+           
           q3d = (x**2 + y**2 + (z - 100)**2 - link3d**2 - link4hypotenuse**2) / (2 * link3d * link4hypotenuse)
           temp3_1 = atan2(sqrt(1-q3d**2), q3d)
           temp3_2 = atan2(-sqrt(1-q3d**2),q3d)
@@ -46,10 +47,10 @@ def handle_inverse_kinematics(req):
           q2_2 = -round(pi/2-temp2_2, 4)
           # Select based on some criteria - figure out how to ensure tip pose is down?
           # For now, return values for smaller theta2
-          if (abs(q2_1)<abs(q2_2):
+          if (abs(q2_1)<abs(q2_2)):
             q2 = q2_1
             q3 = q3_1
-          else
+          else:
             q2 = q2_2
             q3 = q3_2
           q4 = 0
