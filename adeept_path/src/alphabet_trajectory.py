@@ -28,7 +28,7 @@ def get_alphabet_trajectory(alphabet, prev_pos=[0, 0, 0], offset=[0, 0, 0], rate
     elif alphabet == 'H':
         return drawH(prev_pos, offset)
     elif alphabet == 'I':
-        return drawI(prev_pos, offset)
+        return drawI(prev_pos, offset, rate, scale)
     elif alphabet == 'J':
         return drawJ(prev_pos, offset)
     elif alphabet == 'K':
@@ -93,8 +93,12 @@ def drawG(prev_pos, offset):
 def drawH(prev_pos, offset):
     return 0
 
-def drawI(prev_pos, offset):
-    return 0
+def drawI(prev_pos, offset, rate, scale):
+    t_I = 1600
+    waypoints = np.array([[prev_pos(0), prev_pos(1), prev_pos(2)]])
+    for t in range(0, t_I, rate):
+        waypoints = np.concatenate((waypoints, waypointI(t, prev_pos, offset, scale)))
+    return waypoints
 
 def drawJ(prev_pos, offset):
     return 0
@@ -187,3 +191,22 @@ def waypointA(time, prev_xyz, offset, scale):
         z = offset[2] + 0 + (0.5 - 0) / 50 * (time - 3650)
     return np.array([[x/100, y/100, z/100]])
 
+
+def waypointI(time, prev_xyz, offset, scale):
+    if time < 500:
+        x = prev_xyz(1) + (1.5 + offset[0] - prev_xyz(1)) / 500 * time * scale
+        y = prev_xyz(2) + (4.0 + offset[1] - prev_xyz(2)) / 500 * time * scale
+        z = prev_xyz(3) + (0.5 - offset[2]) / 500 * time
+    elif time < 550:
+        x = offset[0] + 1.5 * scale
+        y = offset[1] + 4 * scale
+        z = offset[2] + 0.5 + (0 - 0.5) / 50 * (time - 500)
+    elif time < 1550:
+        x = offset[0] + 1.5 * scale
+        y = offset[1] + (4 + (0 - 4.0) / 1000 * (time - 550)) * scale
+        z = offset[2] + 0
+    elif time <= 1600:
+        x = offset[0] + 1.5 * scale
+        y = offset[1] + 0 * scale
+        z = offset[2] + 0 + (0.5 - 0) / 50 * (time - 1550)
+    return np.array([[x / 100, y / 100, z / 100]])
