@@ -27,7 +27,7 @@ To use Arduino (Hardware) in ROS, follow the instructions to [install Arduino ID
 3. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_command/src/**
 4. Give following python files permission: `chmod +x get_homogeneous.py adeept_connector.py adeept_kin_server.py joints_pos_controller.py joints_vel_controller.py adeept_VK_server.py switch_control.py `.
 5. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_path/src/**
-6. Give following python files permission: `chmod +x draw_alphabet.py`
+6. Give following python files permission: `chmod +x draw_alphabet.py plot_trajectory.py`
 
 ## Launch the Adeept Robot
 
@@ -38,10 +38,6 @@ To see the robot in rviz:
 Or to generate the robot in gazebo:
 
 `roslaunch adeept_gazebo adeept_world.launch`
-
-After launching in gazebo, one can try to control the robot by
-
-`rostopic pub -1 /adeept/joint1_position_controller/command std_msgs/Float64 "data: 0.5"`
 
 To launch all the command nodes:
 
@@ -60,10 +56,24 @@ Available services list:
 /adeept/set_joint_vel_ref
 /adeept/set_cartesian_pos_ref
 /adeept/set_cartesian_vel_ref
+/adeept/draw_alphabet
 ```
 
+## Robot drawing
+
+One could plot the robot trajectory to visualize the drawing by
+
+`rosrun adeept_path plot_trajectory.py`
+
+To draw an alphabet:
+
+`rosservice call adeept/draw_alphabet 'A'`
 
 ## Project Detail
+
+#### Forward and Inverse Kinematics
+
+---
 
 For the robot kinematics, the code Implemented two nodes including a forward kinematic node and a connector. After opening all the nodes, there will be some services. The first node provide inverse kinematic and forward kinematic calculation.
 
@@ -77,15 +87,17 @@ The connector builds bridges for connecting gazebo robot and kinematic nodes. Th
 
 `rosservice call adeept/check_fk` 
 
+#### Velocity Kinematics @TODO
+
 ---
 
-@TODO
-
-In terms of the velocity kinematic part, codes for forward and inverse velocity kinematic were implemented. The node provides inverse velocity kinematic and forward velocity kinematic calculation.
+In terms of the velocity kinematic part, codes for forward and inverse velocity kinematic were implemented. The node provides inverse velocity kinematic and forward velocity kinematic` calculation.
 
 `rosservice call adeept/vel_inv_kin q1, q2, q3, x, y, z, Vx, Vy, Vz, Wx, Wy, Wz` 
 
 `rosservice call adeept/vel_for_kin q1, q2, q3, q1_dot, q2_dot, q3_dot`
+
+#### Controller
 
 ---
 
@@ -122,9 +134,11 @@ We tuned the parameters and changed the PID values in the file `adeept_control/c
 
 To tune the value and see the result in real time, suggest using `rqt`. More detail of tunning process can refer to [Gazebo Control Tutorial](http://gazebosim.org/tutorials?tut=ros_control).
 
+#### Human Interface
+
 ---
 
-The final goal of the this project is to combine inverse position and inverse velocity kinematics with position and velocity controllers. In this way, when one gives the robot a Cartesian coordinate or a desired speed of the end of effector, the robot could figure out how to react using inverse kinematics, which is usually what people would like the robots to do.
+The next goal of the this project is to combine inverse position and inverse velocity kinematics with position and velocity controllers. In this way, when one gives the robot a Cartesian coordinate or a desired speed of the end of effector, the robot could figure out how to react using inverse kinematics, which is usually what people would like the robots to do.
 
 First, as mentioned before, position controllers and velocity controllers are two different controllers, one can only use one of them for controlling one joint. To switch controller of all the three joints between position controllers and velocity controllers, one can use the server provided by `switch_control.py`. The parameter "p2v" represents changing from position controller to velocity controller and "v2p" plays a similar role.
 
@@ -144,7 +158,7 @@ Noted that if the robot could not go to an invalid coordinates (x, y, z), it wou
 
 A valid example would be:
 
-`rosservice call adeept/set_cartesian_pos_ref "{x: 0.1, y: 0.07, z: 0.152}"` `
+`rosservice call adeept/set_cartesian_pos_ref "{x: 0.1, y: 0.07, z: 0.152}"` 
 
 `rosservice call adeept/switch_control 'p2v'`
 
@@ -152,12 +166,16 @@ A valid example would be:
 
 One should be able to see that the robot moves to (0.1, 0, 0.14) in the world coordinate. Then it moves around the +z direction for 3 seconds at a speed of 0.1.
 
+#### Caligraphy
+
 ---
 
-To draw an alphabet:
+The final goal of the project is to perform calligraphy. What have been built above are used for this purpose. Trajectory for drawing 26 alphabets are written in `alphabet_trajectory.py`. Specific offset, orientation and scale can be set to change the position and size of the alphabets. To draw an alphabet
 
 `rosservice call adeept/draw_alphabet 'A'`
 
-## Node graph:
+#### Node graph:
 
-![node_graph](demo/node_graph.png)
+---
+
+![node_graph](demo/node_graph.jpg)
