@@ -1,15 +1,55 @@
 import numpy as np
 
+def get_string_trajectory(string, start_pos=[0,0,0], fix_scale = -1, y_alinement = 'left'):
 
-def get_alphabet_trajectory(alphabet, prev_pos=[0, 0, 0], offset=[0, 0, 0], rate=25, scale=0.05):
+    # change the x and y limit of the canvas to get the right scale letters
+    # the total length from y_min to y_max with 0 in the middle, in meters
+    y_len = 30
+    char_len = len(string)
+    if fix_scale == -1:
+        scale = (y_len/char_len)/4 # scale * 4 = actual char width
+    else:
+        scale = fix_scale
+
+    char_y_len = scale * 4
+    char_list = list(string)
+    waypoints = np.array([[start_pos[0], start_pos[1], start_pos[2]]])
+    if y_alinement == 'left':
+        for i in range(0, char_len - 1):
+            waypoints = np.concatenate((waypoints,
+                                        get_alphabet_trajectory(char_list[i], list(waypoints[-1]),
+                                                                [0, -(y_len/2) + i * char_y_len, 0], scale)))
+        return waypoints
+    elif y_alinement == 'right':
+        for i in range(0, char_len - 1):
+            waypoints = np.concatenate((waypoints,
+                                        get_alphabet_trajectory(char_list[i], list(waypoints[-1]),
+                                                                [0, (y_len/2-char_y_len*char_len)+i*char_y_len, 0],
+                                                                scale)))
+        return waypoints
+    elif y_alinement == 'center':
+        for i in range(0, char_len - 1):
+            waypoints = np.concatenate((waypoints,
+                                        get_alphabet_trajectory(char_list[i], list(waypoints[-1]),
+                                                                [0, -(char_y_len*char_len/2)+i*char_y_len, 0], scale)))
+        return waypoints
+
+
+
+
+
+
+
+
+def get_alphabet_trajectory(alphabet, prev_pos=[0, 0, 0], offset=[0, 0, 0], scale=0.05, rate=25):
     '''
     Generate the waypoints for a given character
     :param alphabet: an English Capital letter charater
     :param prev_pos: the previous x, y, z position of the end effector
     :param offset: the x, y, z, formatting offset
-    :param rate: the speed of drawing, the bigger the number, fewer waypoints. (should be less than 50)
     :param scale: to make the letter bigger (scale > 1) or smaller (0 < scale < 1)
-    :return:
+    :param rate: the speed of drawing, the bigger the number, fewer waypoints. (should be less than 50)
+    :return: n by 3 array of way points
     '''
     if alphabet == 'A':
         return drawA(prev_pos, offset, rate, scale)
