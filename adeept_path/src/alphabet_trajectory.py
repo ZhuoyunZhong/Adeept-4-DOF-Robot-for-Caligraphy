@@ -112,26 +112,54 @@ def drawA(prev_pos, offset, rate, scale):
         waypoints = np.concatenate((waypoints, waypointA(t, prev_pos, offset, scale)))
     return waypoints
 
-def drawB(prev_pos, offset):
-    return 0
+def drawB(prev_pos, offset, rate, scale):
+    t_B = 5600
+    waypoints = np.array([[prev_pos[0], prev_pos[1], prev_pos[2]]])
+    for t in range(0, t_B, rate):
+        waypoints = np.concatenate((waypoints, waypointB(t, prev_pos, offset, scale)))
+    return waypoints
 
-def drawC(prev_pos, offset):
-    return 0
+def drawC(prev_pos, offset, rate, scale):
+    t_C = 4100
+    waypoints = np.array([[prev_pos[0], prev_pos[1], prev_pos[2]]])
+    for t in range(0, t_C, rate):
+        waypoints = np.concatenate((waypoints, waypointC(t, prev_pos, offset, scale)))
+    return waypoints
 
-def drawD(prev_pos, offset):
-    return 0
+def drawD(prev_pos, offset, rate, scale):
+    t_D = 3600
+    waypoints = np.array([[prev_pos[0], prev_pos[1], prev_pos[2]]])
+    for t in range(0, t_D, rate):
+        waypoints = np.concatenate((waypoints, waypointD(t, prev_pos, offset, scale)))
+    return waypoints
 
-def drawE(prev_pos, offset):
-    return 0
+def drawE(prev_pos, offset, rate, scale):
+    t_E = 5200
+    waypoints = np.array([[prev_pos[0], prev_pos[1], prev_pos[2]]])
+    for t in range(0, t_E, rate):
+        waypoints = np.concatenate((waypoints, waypointE(t, prev_pos, offset, scale)))
+    return waypoints
 
-def drawF(prev_pos, offset):
-    return 0
+def drawF(prev_pos, offset, rate, scale):
+    t_F = 4200
+    waypoints = np.array([[prev_pos[0], prev_pos[1], prev_pos[2]]])
+    for t in range(0, t_F, rate):
+        waypoints = np.concatenate((waypoints, waypointF(t, prev_pos, offset, scale)))
+    return waypoints
 
-def drawG(prev_pos, offset):
-    return 0
+def drawG(prev_pos, offset, rate, scale):
+    t_G = 5100
+    waypoints = np.array([[prev_pos[0], prev_pos[1], prev_pos[2]]])
+    for t in range(0, t_G, rate):
+        waypoints = np.concatenate((waypoints, waypointG(t, prev_pos, offset, scale)))
+    return waypoints
 
-def drawH(prev_pos, offset):
-    return 0
+def drawH(prev_pos, offset, rate, scale):
+    t_H = 4800
+    waypoints = np.array([[prev_pos[0], prev_pos[1], prev_pos[2]]])
+    for t in range(0, t_H, rate):
+        waypoints = np.concatenate((waypoints, waypointH(t, prev_pos, offset, scale)))
+    return waypoints
 
 def drawI(prev_pos, offset, rate, scale):
     t_I = 1600
@@ -194,8 +222,8 @@ def drawZ(prev_pos, offset):
 
 def waypointA(time, prev_xyz, offset, scale):
     if time < 500:
-        x = prev_xyz[0] + (0 + offset[1] - prev_xyz[0]) / 500 * time
-        y = prev_xyz[1] + (0 + offset[0] - prev_xyz[1]) / 500 * time
+        x = prev_xyz[0] + (0 + offset[0] - prev_xyz[0]) / 500 * time
+        y = prev_xyz[1] + (0 + offset[1] - prev_xyz[1]) / 500 * time
         z = prev_xyz[2] + (0.05 + offset[2] - prev_xyz[2]) / 500 * time
     elif time < 550:
         x = offset[0] + 0
@@ -231,6 +259,306 @@ def waypointA(time, prev_xyz, offset, scale):
         z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 3650)
     return np.array([[x, y, z]])
 
+def waypointB(time, prev_xyz, offset, scale):
+    if time < 500:
+        x = prev_xyz[0] + (0 + offset[0] - prev_xyz[0]) / 500 * time
+        y = prev_xyz[1] + (0 + offset[1] - prev_xyz[1]) / 500 * time
+        z = prev_xyz[2] + (0.05 + offset[2] - prev_xyz[2]) / 500 * time
+    elif time < 550:
+        x = offset[0] + 0
+        y = offset[1] - 0
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 500)
+    elif time < 1550:
+        x = offset[0] + (0 + (4 - 0) / 1000 * (time - 550)) * scale
+        y = offset[1] - 0
+        z = offset[2] + 0
+    elif time < 2050:
+        x = offset[0] + 4 * scale
+        y = offset[1] - (0 + (1 - 0) / 500 * (time - 1550)) * scale
+        z = offset[2] + 0
+    elif time < 3050:
+        x = offset[0] + (3 + np.cos((time - 2050) * np.pi / 1000) * 1) * scale
+        y = offset[1] - (1 + np.sin((time - 2050) * np.pi / 1000) * 1) * scale
+        z = offset[2] + 0
+    elif time < 3550:
+        x = offset[0] + 2 * scale
+        y = offset[1] - (1 + (0 - 1) / 500 * (time - 3050)) * scale
+        z = offset[2] + 0
+    elif time < 4050:
+        x = offset[0] + 2 * scale
+        y = offset[1] - (0 + (1.5 - 0) / 500 * (time - 3550)) * scale
+        z = offset[2] + 0
+    elif time < 5050:
+        x = offset[0] + (1 + np.cos((time - 4050) * np.pi / 1000) * 1) * scale
+        y = offset[1] - (1.5 + np.sin((time - 4050) * np.pi / 1000) * 1) * scale
+        z = offset[2] + 0
+    elif time < 5550:
+        x = offset[0] + 0
+        y = offset[1] - (1.5 + (0 - 1.5) / 500 * (time - 5050)) * scale
+        z = offset[2] + 0
+    elif time <= 5600:
+        x = offset[0] + 0
+        y = offset[1] + 0
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 5550)
+    return np.array([[x, y, z]])
+
+def waypointC(time, prev_xyz, offset, scale):
+    if time < 500:
+        x = prev_xyz[0] + (3 * scale + offset[0] - prev_xyz[0]) / 500 * time
+        y = prev_xyz[1] + (-3 * scale + offset[1] - prev_xyz[1]) / 500 * time
+        z = prev_xyz[2] + (0.05 + offset[2] - prev_xyz[2]) / 500 * time
+    elif time < 550:
+        x = offset[0] + 3 * scale
+        y = offset[1] - 3 * scale
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 500)
+    elif time < 1050:
+        x = offset[0] + (3 + np.sin((time - 550) * np.pi / 1000) * 1) * scale
+        y = offset[1] - (2 + np.cos((time - 550) * np.pi / 1000) * 1) * scale
+        z = offset[2] + 0
+    elif time < 1550:
+        x = offset[0] + 4 * scale
+        y = offset[1] - (2 + (1 - 2) / 500 * (time - 1050)) * scale
+        z = offset[2] + 0
+    elif time < 2050:
+        x = offset[0] + (3 + np.cos((time - 1550) * np.pi / 1000) * 1) * scale
+        y = offset[1] - (1 - np.sin((time - 1550) * np.pi / 1000) * 1) * scale
+        z = offset[2] + 0
+    elif time < 2550:
+        x = offset[0] + (3 + (1 - 3) / 500 * (time - 2050)) * scale
+        y = offset[1] - 0
+        z = offset[2] + 0
+    elif time < 3050:
+        x = offset[0] + (1 - np.cos((time - 2550) * np.pi / 1000) * 1) * scale
+        y = offset[1] - (1 - np.sin((time - 2550) * np.pi / 1000) * 1) * scale
+        z = offset[2] + 0
+    elif time < 3550:
+        x = offset[0] + 0
+        y = offset[1] - (1 + (2 - 1) / 500 * (time - 3050)) * scale
+        z = offset[2] + 0
+    elif time < 4050:
+        x = offset[0] + (1 - np.cos((time - 3550) * np.pi / 1000) * 1) * scale
+        y = offset[1] - (2 + np.sin((time - 3550) * np.pi / 1000) * 1) * scale
+        z = offset[2] + 0
+    elif time <= 4100:
+        x = offset[0] + 1 * scale
+        y = offset[1] - 3 * scale
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 4050)
+    return np.array([[x, y, z]])
+
+def waypointD(time, prev_xyz, offset, scale):
+    if time < 500:
+        x = prev_xyz[0] + (0 + offset[0] - prev_xyz[0]) / 500 * time
+        y = prev_xyz[1] + (0 + offset[1] - prev_xyz[1]) / 500 * time
+        z = prev_xyz[2] + (0.05 + offset[2] - prev_xyz[2]) / 500 * time
+    elif time < 550:
+        x = offset[0] + 0
+        y = offset[1] + 0
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 500)
+    elif time < 1550:
+        x = offset[0] + (0 + (4 - 0) / 1000 * (time - 550)) * scale
+        y = offset[1] - 0
+        z = offset[2] + 0
+    elif time < 1800:
+        x = offset[0] + 4 * scale
+        y = offset[1] - (0 + (0.5 - 0) / 250 * (time - 1550)) * scale
+        z = offset[2] + 0
+    elif time < 3300:
+        x = offset[0] + (2 + np.cos((time - 1800) * np.pi / 1500) * 2) * scale
+        y = offset[1] - (0.5 + np.sin((time - 1800) * np.pi / 1500) * 2) * scale
+        z = offset[2] + 0
+    elif time < 3550:
+        x = offset[0] + 0
+        y = offset[1] - (0.5 + (0 - 0.5) / 250 * (time - 3300)) * scale
+        z = offset[2] + 0
+    elif time <= 3600:
+        x = offset[0] + 0
+        y = offset[1] + 0
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 3550)
+    return np.array([[x, y, z]])
+
+def waypointE(time, prev_xyz, offset, scale):
+    if time < 500:
+        x = prev_xyz[0] + (0 + offset[0] - prev_xyz[0]) / 500 * time
+        y = prev_xyz[1] + (-2.5 * scale + offset[1] - prev_xyz[1]) / 500 * time
+        z = prev_xyz[2] + (0.05 + offset[2] - prev_xyz[2]) / 500 * time
+    elif time < 550:
+        x = offset[0] + 0
+        y = offset[1] - 2.5 * scale
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 500)
+    elif time < 1550:
+        x = offset[0] + 0
+        y = offset[1] - (2.5 + (0 - 2.5) / 1000 * (time - 550)) * scale
+        z = offset[2] + 0
+    elif time < 2550:
+        x = offset[0] + (0 + (4 - 0) / 1000 * (time - 1550)) * scale
+        y = offset[1] - 0
+        z = offset[2] + 0
+    elif time < 3550:
+        x = offset[0] + 4 * scale
+        y = offset[1] - (0 + (2.5 - 0) / 1000 * (time - 2550)) * scale
+        z = offset[2] + 0
+    elif time < 3600:
+        x = offset[0] + 4 * scale
+        y = offset[1] - 2.5 * scale
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 3550)
+    elif time < 4100:
+        x = offset[0] + (4 + (2 - 4) / 500 * (time - 3600)) * scale
+        y = offset[1] - (2.5 + (0 - 2.5) / 500 * (time - 3600)) * scale
+        z = offset[2] + 0.5
+    elif time < 4150:
+        x = offset[0] + 2 * scale
+        y = offset[1] - 0
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 4100)
+    elif time < 5150:
+        x = offset[0] + 2 * scale
+        y = offset[1] - (0 + (2 - 0) / 1000 * (time - 4150)) * scale
+        z = offset[2] + 0
+    elif time <= 5200:
+        x = offset[0] + 2 * scale
+        y = offset[1] - 2 * scale
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 5150)
+    return np.array([[x, y, z]])
+
+def waypointF(time, prev_xyz, offset, scale):
+    if time < 500:
+        x = prev_xyz[0] + (0 + offset[0] - prev_xyz[0]) / 500 * time
+        y = prev_xyz[1] + (0 + offset[1] - prev_xyz[1]) / 500 * time
+        z = prev_xyz[2] + (0.05 + offset[2] - prev_xyz[2]) / 500 * time
+    elif time < 550:
+        x = offset[0] + 0
+        y = offset[1] - 0
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 500)
+    elif time < 1550:
+        x = offset[0] + (0 + (4 - 0) / 1000 * (time - 550)) * scale
+        y = offset[1] - 0
+        z = offset[2] + 0
+    elif time < 2550:
+        x = offset[0] + 4 * scale
+        y = offset[1] - (0 + (2.5 - 0) / 1000 * (time - 1550)) * scale
+        z = offset[2] + 0
+    elif time < 2600:
+        x = offset[0] + 4 * scale
+        y = offset[1] - 2.5 * scale
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 2550)
+    elif time < 3100:
+        x = offset[0] + (4 + (2 - 4) / 500 * (time - 2600)) * scale
+        y = offset[1] - (2.5 + (0 - 2.5) / 500 * (time - 2600)) * scale
+        z = offset[2] + 0.05
+    elif time < 3150:
+        x = offset[0] + 2 * scale
+        y = offset[1] - 0
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 3100)
+    elif time < 4150:
+        x = offset[0] + 2 * scale
+        y = offset[1] - (0 + (2 - 0) / 1000 * (time - 3150)) * scale
+        z = offset[2] + 0
+    elif time <= 4200:
+        x = offset[0] + 2 * scale
+        y = offset[1] - 2 * scale
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 4150)
+    return np.array([[x, y, z]])
+
+def waypointG(time, prev_xyz, offset, scale):
+    if time < 500:
+        x = prev_xyz[0] + (3 * scale + offset[0] - prev_xyz[0]) / 500 * time
+        y = prev_xyz[1] + (-3 * scale + offset[1] - prev_xyz[1]) / 500 * time
+        z = prev_xyz[2] + (0.05 + offset[2] - prev_xyz[2]) / 500 * time
+    elif time < 550:
+        x = offset[0] + 3 * scale
+        y = offset[1] - 3 * scale
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 500)
+    elif time < 1050:
+        x = offset[0] + (3 + np.sin((time - 550) * np.pi / 1000) * 1) * scale
+        y = offset[1] - (2 + np.cos((time - 550) * np.pi / 1000) * 1) * scale
+        z = offset[2] + 0
+    elif time < 1550:
+        x = offset[0] + 4 * scale
+        y = offset[1] - (2 + (1 - 2) / 500 * (time - 1050)) * scale
+        z = offset[2] + 0
+    elif time < 2050:
+        x = offset[0] + (3 + np.cos((time - 1550) * np.pi / 1000) * 1) * scale
+        y = offset[1] - (1 - np.sin((time - 1550) * np.pi / 1000) * 1) * scale
+        z = offset[2] + 0
+    elif time < 2550:
+        x = offset[0] + (3 + (1 - 3) / 500 * (time - 2050)) * scale
+        y = offset[1] - 0
+        z = offset[2] + 0
+    elif time < 3050:
+        x = offset[0] + (1 - np.cos((time - 2550) * np.pi / 1000) * 1) * scale
+        y = offset[1] - (1 - np.sin((time - 2550) * np.pi / 1000) * 1) * scale
+        z = offset[2] + 0
+    elif time < 3550:
+        x = offset[0] + 0
+        y = offset[1] - (1 + (2 - 1) / 500 * (time - 3050)) * scale
+        z = offset[2] + 0
+    elif time < 4050:
+        x = offset[0] + (1 - np.cos((time - 3550) * np.pi / 1000) * 1) * scale
+        y = offset[1] - (2 + np.sin((time - 3550) * np.pi / 1000) * 1) * scale
+        z = offset[2] + 0
+    elif time < 4550:
+        x = offset[0] + (1 + (2 - 1) / 500 * (time - 4050)) * scale
+        y = offset[1] - 3 * scale
+        z = offset[2] + 0
+    elif time < 5050:
+        x = offset[0] + 2 * scale
+        y = offset[1] - (3 + (2 - 3) / 500 * (time - 4550)) * scale
+        z = offset[2] + 0
+    elif time <= 5100:
+        x = offset[0] + 2 * scale
+        y = offset[1] - 2 * scale
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 5050)
+    return np.array([[x, y, z]])
+
+def waypointH(time, prev_xyz, offset, scale):
+    if time < 500:
+        x = prev_xyz[0] + (0 + offset[0] - prev_xyz[0]) / 500 * time
+        y = prev_xyz[1] + (0 + offset[1] - prev_xyz[1]) / 500 * time
+        z = prev_xyz[2] + (0.05 - prev_xyz[2]) / 500 * time
+    elif time < 550:
+        x = offset[0] + 0
+        y = offset[1] + 0
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 500)
+    elif time < 1550:
+        x = offset[0] + (0 + (4 - 0) / 1000 * (time - 550)) * scale
+        y = offset[1] - 0
+        z = offset[2] + 0
+    elif time < 1600:
+        x = offset[0] + 4 * scale
+        y = offset[1] - 0
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 1550)
+    elif time < 2100:
+        x = offset[0] + (4 + (2 - 4) / 500 * (time - 1600)) * scale
+        y = offset[1] - 0
+        z = offset[2] + 0.05
+    elif time < 2150:
+        x = offset[0] + 2 * scale
+        y = offset[1] - 0
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 2100)
+    elif time < 3150:
+        x = offset[0] + 2 * scale
+        y = offset[1] - (0 + (2.5 - 0) / 1000 * (time - 2150)) * scale
+        z = offset[2] + 0
+    elif time < 3200:
+        x = offset[0] + 2 * scale
+        y = offset[1] - 2.5 * scale
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 3150)
+    elif time < 3700:
+        x = offset[0] + (2 + (4 - 2) / 500 * (time - 3200)) * scale
+        y = offset[1] - 2.5 * scale
+        z = offset[2] + 0.05
+    elif time < 3750:
+        x = offset[0] + 4 * scale
+        y = offset[1] - 2.5 * scale
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 3700)
+    elif time < 4750:
+        x = offset[0] + (4 + (0 - 4) / 1000 * (time - 3750)) * scale
+        y = offset[1] - 2.5 * scale
+        z = offset[2] + 0
+    elif time <= 4800:
+        x = offset[0] + 0
+        y = offset[1] - 2.5 * scale
+        z = offset[2] + 0 + (0.05 - 0) / 50 * (time - 4750)
+    return np.array([[x, y, z]])
 
 def waypointI(time, prev_xyz, offset, scale):
     if time < 500:
