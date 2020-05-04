@@ -13,8 +13,8 @@ import numpy as np
 
 import rosservice
 
-from alphabet_trajectory import get_alphabet_trajectory
-from adeept_path.srv import DrawAlphabet, DrawAlphabetResponse
+from alphabet_trajectory import get_string_trajectory
+from adeept_path.srv import DrawSentence, DrawSentenceResponse
 try:
     caligraphy_file = dirname(dirname(dirname(abspath(__file__))))
     sys.path.append(caligraphy_file)
@@ -26,12 +26,10 @@ from adeept_command.srv import SetCartesianPos
 
 
 # Call back
-def handle_draw_alphabet(req):
-    alphabet = req.alphabet
+def handle_draw_sentence(req):
     # Get waypoint from trajectory function
     x, y, z, psi, theta, phi = acquire_coordinates()
-    waypoints = get_alphabet_trajectory(alphabet, prev_pos=[x, y, z], 
-                                        offset=[0.11, 0, 0], scale=0.015, rate=25)
+    waypoints = get_string_trajectory(req.sentence, start_pos=[x,y,z])
 
     if False:
         # Print the planned trajectory
@@ -55,20 +53,20 @@ def handle_draw_alphabet(req):
         while 1:
             x, y, z, psi, theta, phi = acquire_coordinates()
             if abs(waypoint[0]-x)<0.02 and abs(waypoint[1]-y)<0.02 and \
-               abs(waypoint[2]-z)<0.02 and time.time() - prev_time > 0.1:
+               abs(waypoint[2]-z)<0.02 and time.time() - prev_time > 0.05:
                 prev_time = time.time()
                 break
 
-    return DrawAlphabetResponse(True)
+    return DrawSentenceResponse(True)
 
 # Alphabe services
-def draw_alphabet():
-    rospy.init_node('draw_alphabet_node')
+def draw_sentence():
+    rospy.init_node('draw_sentence_node')
 
-    s1 = rospy.Service('draw_alphabet', DrawAlphabet, handle_draw_alphabet)
+    s1 = rospy.Service('draw_sentence', DrawSentence, handle_draw_sentence)
 
     rospy.spin()
 
 
 if __name__ == "__main__":
-    draw_alphabet()
+    draw_sentence()

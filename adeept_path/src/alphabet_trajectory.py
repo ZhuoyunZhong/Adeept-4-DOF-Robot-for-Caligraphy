@@ -1,37 +1,41 @@
 import numpy as np
 
 
-def get_string_trajectory(string, start_pos=[0,0,0], fix_scale = -1, y_alinement = 'left'):
-
+def get_string_trajectory(string, start_pos=[0,0,0], offset=[0.11, 0, 0], 
+                          fix_scale=-1, y_alinement = 'center'):
     # change the x and y limit of the canvas to get the right scale letters
     # the total length from y_min to y_max with 0 in the middle, in meters
-    y_len = 30
+    y_len = 0.08
     char_len = len(string)
     if fix_scale == -1:
-        scale = (y_len/char_len)/4.0 # scale * 4.0 = actual char width
+        scale = (y_len/char_len) 
     else:
         scale = fix_scale
+    # Maximum scale
+    if scale > 0.015:
+        scale = 0.015
 
+    # scale * 4.0 = actual char width
     char_y_len = scale * 4
     char_list = list(string)
     waypoints = np.array([[start_pos[0], start_pos[1], start_pos[2]]])
     if y_alinement == 'left':
-        for i in range(0, char_len - 1.0):
+        for i in range(char_len):
             waypoints = np.concatenate((waypoints,
                 get_alphabet_trajectory(char_list[i], list(waypoints[-1]),
-                    [0, -(y_len/2.0) + i * char_y_len, 0], scale)))
+                    [offset[0], (y_len*4/2.0) - i*char_y_len, offset[2]], scale)))
         return waypoints
     elif y_alinement == 'right':
-        for i in range(0, char_len - 1.0):
+        for i in range(char_len):
             waypoints = np.concatenate((waypoints,
                 get_alphabet_trajectory(char_list[i], list(waypoints[-1]),
-                    [0, (y_len/2-char_y_len*char_len)+i*char_y_len, 0], scale)))
+                    [offset[0], -(y_len*4/2.0-char_y_len*char_len) - i*char_y_len, offset[2]], scale)))
         return waypoints
     elif y_alinement == 'center':
-        for i in range(0, char_len - 1.0):
+        for i in range(char_len):
             waypoints = np.concatenate((waypoints,
                 get_alphabet_trajectory(char_list[i], list(waypoints[-1]),
-                    [0, -(char_y_len*char_len/2.0)+i*char_y_len, 0], scale)))
+                    [offset[0], (char_y_len*char_len/2.0) - i*char_y_len, offset[2]], scale)))
         return waypoints
 
 
@@ -466,7 +470,7 @@ def waypointE(time, prev_xyz, offset, scale):
     elif time < 4100:
         x = offset[0] + (4.0 + (2.0 - 4.0) / 500 * (time - 3600)) * scale
         y = offset[1] - (2.5 + (0 - 2.5) / 500 * (time - 3600)) * scale
-        z = offset[2] + 0.5
+        z = offset[2] + 0.05
     elif time < 4150:
         x = offset[0] + 2.0 * scale
         y = offset[1] - 0
@@ -674,7 +678,7 @@ def waypointK(time, prev_xyz, offset, scale):
     elif time < 550:
         x = offset[0] + 0
         y = offset[1] + 0
-        z = offset[2] + 0.5 + (0 - 0.5) / 50 * (time - 500)
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 500)
     elif time < 1550:
         x = offset[0] + (0 + (4.0 - 0) / 1000 * (time - 550)) * scale
         y = offset[1] - 0
@@ -1123,7 +1127,7 @@ def waypointW(time, prev_xyz, offset, scale):
     elif time < 550:
         x = offset[0] + 4.0 * scale
         y = offset[1] + 0
-        z = offset[2] + 0.5 + (0 - 0.5) / 50 * (time - 500)
+        z = offset[2] + 0.05 + (0 - 0.05) / 50 * (time - 500)
     elif time < 1550:
         x = offset[0] + (4.0 + (0 - 4.0) / 1000 * (time - 550)) * scale
         y = offset[1] - 0
@@ -1252,11 +1256,12 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from mpl_toolkits.mplot3d import Axes3D
 
-    waypoints = drawH([0.1, 0, 0.1], [0.11, 0, 0], 25, 0.015)
+    #waypoints = drawH([0.1, 0, 0.1], [0.11, 0, 0], 25, 0.015)
+    waypoints1 = get_string_trajectory("HELLOWORLD", start_pos=[0.1,0,0.01], y_alinement = 'center')
 
     # Print the planned trajectory
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    ax.scatter(waypoints[:,0], waypoints[:,1], waypoints[:,2], c='k')
+    ax.scatter(waypoints1[:,0], waypoints1[:,1], waypoints1[:,2], c='r')
     # print(waypoints)
     plt.show()

@@ -21,19 +21,20 @@ from matplotlib import cm
 def plot_trajectory():
     plt.style.use('ggplot')
     fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
+    ax = fig.add_subplot(111)
     traj_x = []
     traj_y = []
     traj_z = []
 
     def animate(i):
         x, y, z, psi, theta, phi = acquire_coordinates()
-        traj_x.append(x)
-        traj_y.append(y)
-        traj_z.append(z)
+        if z < 0.008:
+            traj_x.append(-y)
+            traj_y.append(x)
+            traj_z.append(z)
 
         plt.cla()
-        ax.scatter(traj_x[-200:], traj_y[-200:], traj_z[-200:], cmap=cm.get_cmap("RdGy"))
+        ax.scatter(traj_x[:], traj_y[:], cmap=cm.get_cmap("BuPu"))
     
     ani = FuncAnimation(fig, animate, interval=200)
     plt.show()
