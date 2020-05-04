@@ -301,13 +301,67 @@
   </joint>
 
   <link
-    name="end">
+    name="pen">
     <inertial>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <mass
         value="0.01" />
+      <inertia
+        ixx="4E-2"
+        ixy="0"
+        ixz="0"
+        iyy="4E-2"
+        iyz="0"
+        izz="4E-2" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0.02 0 0"
+        rpy="0 1.5707 0" />
+      <geometry>
+        <cylinder radius = "0.003" length="0.2"/>
+      </geometry>
+      <material name = "brown"/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0.027 0 0"
+        rpy="0 1.5707 0" />
+      <geometry>
+        <cylinder radius = "0.003" length="0.2"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint_pen"
+    type="prismatic">
+    <origin
+      xyz="0.013 0 0.0665"
+      rpy="0 0 0" />
+    <parent
+      link="Link_4" />
+    <child
+      link="pen" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="100.0"
+      velocity="1.0" />
+    <dynamics 
+      damping="0.2" 
+      friction="0.1" />
+  </joint>
+
+    <link
+    name="end">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.001" />
       <inertia
         ixx="4E-2"
         ixy="0"
@@ -335,13 +389,13 @@
     </collision>
   </link>
   <joint
-    name="Joint_end"
+    name="pen_end"
     type="prismatic">
     <origin
-      xyz="0.013 0 0.0665"
+      xyz="0.12 0 0"
       rpy="0 0 0" />
     <parent
-      link="Link_4" />
+      link="pen" />
     <child
       link="end" />
     <axis
@@ -355,6 +409,7 @@
       damping="0.2" 
       friction="0.1" />
   </joint>
+
 
   <!-- Controller -->
   <transmission name="tran1">

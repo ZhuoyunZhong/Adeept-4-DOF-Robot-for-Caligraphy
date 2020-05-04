@@ -24,7 +24,7 @@ def handle_homogeneous_matrix(req):
     l3 = 0.055
     l4 = 0.0665
     # pen length adjustment
-    pen = 0.013 + 0
+    pen = 0.013 + 0.12
 
     ##_---------------------- DH Parameters----------------------------------------
 

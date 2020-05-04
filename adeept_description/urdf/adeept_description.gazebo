@@ -17,6 +17,9 @@
   <gazebo reference="Link_4">
     <material>Gazebo/Grey</material>
   </gazebo>
+    <gazebo reference="pen">
+    <material>Gazebo/Wood</material>
+  </gazebo>
 
   <!-- controller plugin-->
   <gazebo>

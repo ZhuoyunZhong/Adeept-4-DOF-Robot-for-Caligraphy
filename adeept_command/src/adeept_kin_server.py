@@ -12,7 +12,7 @@ import rospy
 
 def handle_inverse_kinematics(req):
     # Robot dimension
-    pen = 0.013 + 0
+    pen = 0.013 + 0.12
     link3d = 0.065
     link4d = 0.055 + 0.0665
     # Input Coordinate
