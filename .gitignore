@@ -1,2 +1,5 @@
 # Ignore Pyc
 *.pyc
+
+# Pycharm
+.idea

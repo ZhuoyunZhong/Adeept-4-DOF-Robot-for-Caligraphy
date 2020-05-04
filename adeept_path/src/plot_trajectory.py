@@ -5,10 +5,11 @@ from os import path
 from os.path import dirname, abspath
 try:
     caligraphy_file = dirname(dirname(dirname(abspath(__file__))))
-    sys.path.append(caligraphy_file)
+    sys.path.append(caligraphy_file+"/adeept_command/src")
 except IndexError:
     pass
-from adeept_command.src.helper import acquire_coordinates
+
+from helper import acquire_coordinates
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D

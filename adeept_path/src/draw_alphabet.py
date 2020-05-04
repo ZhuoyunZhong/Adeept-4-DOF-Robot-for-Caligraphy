@@ -13,14 +13,15 @@ import numpy as np
 
 import rosservice
 
-from adeept_path.srv import DrawAlphabet, DrawAlphabetResponse
 from alphabet_trajectory import get_alphabet_trajectory
+from adeept_path.srv import DrawAlphabet, DrawAlphabetResponse
 try:
     caligraphy_file = dirname(dirname(dirname(abspath(__file__))))
     sys.path.append(caligraphy_file)
+    sys.path.append(caligraphy_file+"/adeept_command/src")
 except IndexError:
     pass
-from adeept_command.src.helper import np2ma, acquire_coordinates
+from helper import np2ma, acquire_coordinates
 from adeept_command.srv import SetCartesianPos
 
 
