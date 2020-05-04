@@ -31,13 +31,13 @@ def handle_draw_alphabet(req):
     # Get waypoint from trajectory function
     x, y, z, psi, theta, phi = acquire_coordinates()
     waypoints = get_alphabet_trajectory(alphabet, prev_pos=[x, y, z], 
-                                        offset=[0.1, 0, 0], scale=0.02, rate=25)
+                                        offset=[0.11, 0, 0], scale=0.015, rate=25)
 
     if False:
         # Print the planned trajectory
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
-        ax.scatter(waypoints[:,0], waypoints[:,1], waypoints[:,2], c='b')
+        ax.scatter(waypoints[:,0], waypoints[:,1], waypoints[:,2], c='r')
         # print(waypoints)
         plt.show()
 
@@ -54,8 +54,8 @@ def handle_draw_alphabet(req):
         prev_time = time.time()
         while 1:
             x, y, z, psi, theta, phi = acquire_coordinates()
-            if abs(waypoint[0]-x)<0.03 and abs(waypoint[1]-y)<0.03 and \
-               abs(waypoint[2]-z)<0.03 and time.time() - prev_time > 0.1:
+            if abs(waypoint[0]-x)<0.02 and abs(waypoint[1]-y)<0.02 and \
+               abs(waypoint[2]-z)<0.02 and time.time() - prev_time > 0.1:
                 prev_time = time.time()
                 break
 
