@@ -31,7 +31,7 @@ def handle_draw_alphabet(req):
     # Get waypoint from trajectory function
     x, y, z, psi, theta, phi = acquire_coordinates()
     waypoints = get_alphabet_trajectory(alphabet, prev_pos=[x, y, z], 
-                                        offset=[0.1, 0, 0.05], scale=0.02)
+                                        offset=[0.1, 0, 0], scale=0.02, rate=25)
 
     if False:
         # Print the planned trajectory
