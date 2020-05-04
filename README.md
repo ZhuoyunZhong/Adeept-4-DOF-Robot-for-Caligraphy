@@ -1,6 +1,6 @@
-# 15Adeept-4-DOF-Robot-for-Caligraphy
+# Adeept-4-DOF-Robot-for-Caligraphy
 
-**Author**:  WPI RBE 501 2020 Spring Team: [Jessica  Herman](https://github.com/KatConroy57), [Xinxiao Li](https://github.com/thejose5), [Anqi Shen](https://github.com/joeyzhong90595), [Zhuoyun Zhong](https://github.com/joeyzhong90595).
+**Author**:  WPI RBE 501 2020 Spring Team: [Jessica  Herman](https://github.com/j-herman), [Xinxiao Li](https://github.com/thejose5), [Anqi Shen](https://github.com/joeyzhong90595), [Zhuoyun Zhong](https://github.com/joeyzhong90595).
 
 ![robot_graph](demo/robot.png)
 
@@ -61,13 +61,15 @@ Available services list:
 
 ## Robot drawing
 
-One could plot the robot trajectory to visualize the drawing by
+One could plot the robot waypoints every 200ms to visualize the drawing by
 
 `rosrun adeept_path plot_trajectory.py`
 
-To draw an alphabet:
+To draw a simple sentence:
 
-`rosservice call adeept/draw_alphabet 'A'`
+`rosservice call adeept/draw_sentence 'ABC'`
+
+![robot_graph](demo/ABC.png)
 
 ## Project Detail
 
@@ -170,9 +172,9 @@ One should be able to see that the robot moves to (0.1, 0, 0.14) in the world co
 
 ---
 
-The final goal of the project is to perform calligraphy. What have been built above are used for this purpose. Trajectory for drawing 26 alphabets are written in `alphabet_trajectory.py`. Specific offset, orientation and scale can be set to change the position and size of the alphabets. To draw an alphabet
+The final goal of the project is to perform calligraphy. What have been built above are used for this purpose. Trajectory for drawing 26 alphabets are written in `alphabet_trajectory.py`. Specific offset, orientation and scale can be set to change the position and size of the alphabets. To draw a simple sentence.
 
-`rosservice call adeept/draw_alphabet 'A'`
+`rosservice call adeept/draw_sentence 'ABC'`
 
 #### Node graph:
 
