@@ -29,7 +29,9 @@ To use Arduino (Hardware) in ROS, follow the instructions to [install Arduino ID
 5. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_path/src/**
 6. Give following python files permission: `chmod +x draw_alphabet.py plot_trajectory.py`
 
-## Launch the Adeept Robot
+## Run in Simulation
+
+### Launch the Adeept Robot
 
 To see the robot in rviz:
 
@@ -59,7 +61,7 @@ Available services list:
 /adeept/draw_alphabet
 ```
 
-## Robot drawing
+### Robot drawing
 
 One could plot the robot waypoints every 200ms to visualize the drawing by
 
@@ -70,6 +72,20 @@ To draw a simple sentence:
 `rosservice call adeept/draw_sentence 'ABC'`
 
 ![robot_graph](demo/ABC.png)
+
+## Run with Adeept Robot
+
+Connect one's computer with the Adeept Robot Arduino. Upload the file `robot.ino` in **adeept_arduino** folder to the Arduino Uno via Arduino IDE. 
+
+Run rosserial to forward the Arduino messages to the rest of ROS by:
+
+`rosrun rosserial_python serial_node.py /dev/ttyUSB0`
+
+Control one of the robot joints by:
+
+`rostopic pub -1 /adeept/joint1_position_controller/command std_msgs/Float64 "data: 45"`
+
+To perform the drawing with Adeept Robot, run the simulation step above and one should be able to see the simulation and real-world robot moves simultaneously.
 
 ## Project Detail
 
