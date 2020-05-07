@@ -79,7 +79,7 @@ Connect one's computer with the Adeept Robot Arduino. Upload the file `robot.ino
 
 Run rosserial to forward the Arduino messages to the rest of ROS by:
 
-`rosrun rosserial_python serial_node.py /dev/ttyUSB0`
+`rosrun rosserial_python serial_node.py /dev/ttyUSB0 _baud:=9600`
 
 Control one of the robot joints by:
 

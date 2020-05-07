@@ -1,41 +1,48 @@
 #include <ros.h>
+
+#include <ros.h>
 #include <std_msgs/String.h>
+#include <std_msgs/Float64.h>
 #include <Servo.h>
 
-// Define servo interface digital interface
-int servopin1 = 9;
-int servopin2 = 6;
-int servopin3 = 5;
-int servopin4 = 3;
-int servopin5 = 11;
+// Define servo
+int servopin1 = 9;    //Define servo interface digital interface 9
+int servopin2 = 6;    //Define servo interface digital interface 6
+int servopin3 = 5;    //Define servo interface digital interface 5
+int servopin4 = 3;    //Define servo interface digital interface 3
+int servopin5 = 11;   //Define servo interface digital interface 11
 
+int moveServoData;
 Servo servo1;
 Servo servo2;
 Servo servo3;
 Servo servo4;
 Servo servo5;
 
-
 // Command callback
 ros::NodeHandle nh;
 
 void commandCb1(const std_msgs::Float64& msg){
-    int joint_pos = msg.data /3.1416*180 + 90;
+  int  joint_pos = msg.data /3.1416*180 + 90;
+    servo1.attach(servopin1);
     servo1.write(joint_pos);
 }
 
 void commandCb2(const std_msgs::Float64& msg){
-    int joint_pos = msg.data /3.1416*180 + 155;
+  int  joint_pos = msg.data /3.1416*180 + 155;
+    servo2.attach(servopin2);
     servo2.write(joint_pos);
 }
 
 void commandCb3(const std_msgs::Float64& msg){
-    int joint_pos = msg.data /3.1416*180 + 155;
+  int  joint_pos = msg.data /3.1416*180 + 155;
+    servo3.attach(servopin3);
     servo3.write(joint_pos);
 }
 
 void commandCb4(const std_msgs::Float64& msg){
-    int joint_pos = msg.data /3.1416*180 + 85;
+  int  joint_pos = msg.data /3.1416*180 + 75;
+    servo4.attach(servopin4);
     servo4.write(joint_pos);
 }
 
@@ -47,7 +54,7 @@ ros::Subscriber<std_msgs::Float64> command_sub4("/adeept/joint4_position_control
 
 
 void setup(){
-    // Set the servo interface as the output interface
+    //Set the servo interface as the output interface
     pinMode(servopin1, OUTPUT); 
     pinMode(servopin2, OUTPUT);
     pinMode(servopin3, OUTPUT);
@@ -62,7 +69,7 @@ void setup(){
     servo1.write(90);
     servo2.write(155);
     servo3.write(155);
-    servo4.write(85);
+    servo4.write(75);
 
     // Receive command
     nh.initNode();
@@ -77,5 +84,5 @@ void setup(){
 
 void loop(){
     nh.spinOnce();
-    delay(20); // wait for 0.002second  
+    delay(1);
 }
