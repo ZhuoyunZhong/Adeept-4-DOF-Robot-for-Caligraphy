@@ -29,7 +29,9 @@ To use Arduino (Hardware) in ROS, follow the instructions to [install Arduino ID
 5. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_path/src/**
 6. Give following python files permission: `chmod +x draw_alphabet.py plot_trajectory.py`
 
-## Launch the Adeept Robot
+## Run in Simulation
+
+### Launch the Adeept Robot
 
 To see the robot in rviz:
 
@@ -59,7 +61,7 @@ Available services list:
 /adeept/draw_alphabet
 ```
 
-## Robot drawing
+### Robot drawing
 
 One could plot the robot waypoints every 200ms to visualize the drawing by
 
@@ -71,6 +73,20 @@ To draw a simple sentence:
 
 ![robot_graph](demo/ABC.png)
 
+## Run with Adeept Robot
+
+Connect one's computer with the Adeept Robot Arduino. Upload the file `robot.ino` in **adeept_arduino** folder to the Arduino Uno via Arduino IDE. 
+
+Run rosserial to forward the Arduino messages to the rest of ROS by:
+
+`rosrun rosserial_python serial_node.py /dev/ttyUSB0 _baud:=9600`
+
+Control one of the robot joints by:
+
+`rostopic pub -1 /adeept/joint1_position_controller/command std_msgs/Float64 "data: 45"`
+
+To perform the drawing with Adeept Robot, run the simulation step above and one should be able to see the simulation and real-world robot moves simultaneously.
+
 ## Project Detail
 
 #### Forward and Inverse Kinematics
@@ -78,10 +94,11 @@ To draw a simple sentence:
 ---
 
 For the robot kinematics, the code Implemented two nodes including a forward kinematic node and a connector. After opening all the nodes, there will be some services. The first node provide inverse kinematic and forward kinematic calculation.
+To call the inverse kinematics server in 3-DOF mode (joint four fixed) use phi, theta, and phi = 0.
 
 `rosservice call adeept/inv_kin x, y, z, phi, theta, psi` 
 
-`rosservice call adeept/for_kin q1, q2, d3 `
+`rosservice call adeept/for_kin q1, q2, q3, q4
 
 The connector builds bridges for connecting gazebo robot and kinematic nodes. The service it provides does not need any input but requires that the robot in gazebo is working. It takes the pose/joint variables of the robot in gazebo and calls `compute_ik`/`compute_fk` to compute the result. It will give both the computed joint variables/pose result and gazebo joint variables/pose data for comparison. If the error is less than 0.01, one could confirm that the nodes are working correctly.
 
@@ -89,15 +106,15 @@ The connector builds bridges for connecting gazebo robot and kinematic nodes. Th
 
 `rosservice call adeept/check_fk` 
 
-#### Velocity Kinematics @TODO
+#### Velocity Kinematics 
 
 ---
 
 In terms of the velocity kinematic part, codes for forward and inverse velocity kinematic were implemented. The node provides inverse velocity kinematic and forward velocity kinematic` calculation.
 
-`rosservice call adeept/vel_inv_kin q1, q2, q3, x, y, z, Vx, Vy, Vz, Wx, Wy, Wz` 
+`rosservice call adeept/vel_inv_kin q1, q2, q3, q4, Vx, Vy, Vz, Wx, Wy, Wz` 
 
-`rosservice call adeept/vel_for_kin q1, q2, q3, q1_dot, q2_dot, q3_dot`
+`rosservice call adeept/vel_for_kin q1, q2, q3, q4, q1_dot, q2_dot, q3_dot, q4_dot`
 
 #### Controller
 
