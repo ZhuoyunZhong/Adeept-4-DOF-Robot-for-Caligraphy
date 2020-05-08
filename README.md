@@ -94,10 +94,11 @@ To perform the drawing with Adeept Robot, run the simulation step above and one 
 ---
 
 For the robot kinematics, the code Implemented two nodes including a forward kinematic node and a connector. After opening all the nodes, there will be some services. The first node provide inverse kinematic and forward kinematic calculation.
+To call the inverse kinematics server in 3-DOF mode (joint four fixed) use phi, theta, and phi = 0.
 
 `rosservice call adeept/inv_kin x, y, z, phi, theta, psi` 
 
-`rosservice call adeept/for_kin q1, q2, d3 `
+`rosservice call adeept/for_kin q1, q2, q3, q4
 
 The connector builds bridges for connecting gazebo robot and kinematic nodes. The service it provides does not need any input but requires that the robot in gazebo is working. It takes the pose/joint variables of the robot in gazebo and calls `compute_ik`/`compute_fk` to compute the result. It will give both the computed joint variables/pose result and gazebo joint variables/pose data for comparison. If the error is less than 0.01, one could confirm that the nodes are working correctly.
 
@@ -105,15 +106,15 @@ The connector builds bridges for connecting gazebo robot and kinematic nodes. Th
 
 `rosservice call adeept/check_fk` 
 
-#### Velocity Kinematics @TODO
+#### Velocity Kinematics 
 
 ---
 
 In terms of the velocity kinematic part, codes for forward and inverse velocity kinematic were implemented. The node provides inverse velocity kinematic and forward velocity kinematic` calculation.
 
-`rosservice call adeept/vel_inv_kin q1, q2, q3, x, y, z, Vx, Vy, Vz, Wx, Wy, Wz` 
+`rosservice call adeept/vel_inv_kin q1, q2, q3, q4, Vx, Vy, Vz, Wx, Wy, Wz` 
 
-`rosservice call adeept/vel_for_kin q1, q2, q3, q1_dot, q2_dot, q3_dot`
+`rosservice call adeept/vel_for_kin q1, q2, q3, q4, q1_dot, q2_dot, q3_dot, q4_dot`
 
 #### Controller
 
