@@ -165,8 +165,6 @@ First, as mentioned before, position controllers and velocity controllers are tw
 
 `rosservice call adeept/switch_control 'v2p'` 
 
-@TODO
-
 Now combined with inverse kinematics, it could also find its way given a desired world coordinates or desired Cartesian velocity.
 
 `rosservice call adeept/set_cartesian_pos_ref x y z` 
