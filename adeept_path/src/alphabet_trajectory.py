@@ -317,11 +317,7 @@ def waypointA(time, prev_xyz, offset, scale):
         z = offset[2] + 0.05 + (0 - 0.05) / 250 * (time - 3300)
     elif time < 4050:
         x = offset[0] + 2.0 * scale
-<<<<<<< HEAD
-        y = offset[1] - (0.9 + (2.25 - 0.75) / 500 * (time - 3150)) * scale
-=======
         y = offset[1] - (0.75 + (2.25 - 0.75) / 500 * (time - 3550)) * scale
->>>>>>> 679a911e6e0224090c99e1a89996aebb8e4d49d3
         z = offset[2] + 0
     elif time <= 4100:
         x = offset[0] + 2.0 * scale
