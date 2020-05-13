@@ -12,7 +12,6 @@ int servopin3 = 5;    //Define servo interface digital interface 5
 int servopin4 = 3;    //Define servo interface digital interface 3
 int servopin5 = 11;   //Define servo interface digital interface 11
 
-int moveServoData;
 Servo servo1;
 Servo servo2;
 Servo servo3;
@@ -23,19 +22,19 @@ Servo servo5;
 ros::NodeHandle nh;
 
 void commandCb1(const std_msgs::Float64& msg){
-  int  joint_pos = msg.data /3.1416*180 + 90;
+    int joint_pos = msg.data /3.1416*180 + 70;
     servo1.attach(servopin1);
     servo1.write(joint_pos);
 }
 
 void commandCb2(const std_msgs::Float64& msg){
-  int  joint_pos = msg.data /3.1416*180 + 155;
+    int joint_pos = msg.data /3.1416*180 + 155;
     servo2.attach(servopin2);
     servo2.write(joint_pos);
 }
 
 void commandCb3(const std_msgs::Float64& msg){
-  int  joint_pos = msg.data /3.1416*180 + 155;
+    int joint_pos = msg.data /3.1416*180 + 155;
     servo3.attach(servopin3);
     servo3.write(joint_pos);
 }
@@ -66,7 +65,7 @@ void setup(){
     servo4.attach(servopin4);
 
     // Back to Home pos
-    servo1.write(90);
+    servo1.write(70);
     servo2.write(155);
     servo3.write(155);
     servo4.write(75);
@@ -84,5 +83,6 @@ void setup(){
 
 void loop(){
     nh.spinOnce();
-    delay(1);
+    
+    delay(80);
 }
