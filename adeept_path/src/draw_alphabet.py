@@ -57,6 +57,11 @@ def handle_draw_sentence(req):
                abs(waypoint[2]-z)<0.02 and time.time() - prev_time > 0.1:
                 prev_time = time.time()
                 break
+            
+            # Get stuck
+            if time.time() - prev_time > 0.5:
+                prev_time = time.time()
+                break
 
     return DrawSentenceResponse(True)
 
