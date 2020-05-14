@@ -5,7 +5,7 @@ def get_string_trajectory(string, start_pos=[0,0,0], offset=[0.11, 0, 0],
                           fix_scale=-1, y_alinement = 'center'):
     # change the x and y limit of the canvas to get the right scale letters
     # the total length from y_min to y_max with 0 in the middle, in meters
-    y_len = 0.08
+    y_len = 0.07
     char_len = len(string)
     if fix_scale == -1:
         scale = (y_len/char_len) 
