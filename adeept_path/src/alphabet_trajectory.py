@@ -223,7 +223,7 @@ def drawQ(prev_pos, offset, rate, scale):
     return waypoints
 
 def drawR(prev_pos, offset, rate, scale):
-    t_R = 2600
+    t_R = 5200
     waypoints = np.array([[prev_pos[0], prev_pos[1], prev_pos[2]]])
     for t in range(0, t_R, rate):
         waypoints = np.concatenate((waypoints, waypointR(t, prev_pos, offset, scale)))
