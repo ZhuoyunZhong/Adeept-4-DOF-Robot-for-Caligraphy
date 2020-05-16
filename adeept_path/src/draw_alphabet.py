@@ -54,7 +54,7 @@ def handle_draw_sentence(req):
         while 1:
             x, y, z, psi, theta, phi = acquire_coordinates()
             if abs(waypoint[0]-x)<0.02 and abs(waypoint[1]-y)<0.02 and \
-               abs(waypoint[2]-z)<0.02 and time.time() - prev_time > 0.1:
+               abs(waypoint[2]-z)<0.02 and time.time() - prev_time > 0.15:
                 prev_time = time.time()
                 break
             
