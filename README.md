@@ -1,8 +1,20 @@
-# Adeept-4-DOF-Robot-for-Caligraphy
+# Adeept-4-DOF-Robot-for-Calligraphy
 
 **Author**:  WPI RBE 501 2020 Spring Team: [Jessica  Herman](https://github.com/j-herman), [Xinxiao Li](https://github.com/thejose5), [Anqi Shen](https://github.com/joeyzhong90595), [Zhuoyun Zhong](https://github.com/joeyzhong90595).
 
-![robot_graph](demo/robot.png)
+This project is to build a robot to perform simple calligraphy tasks both in ROS Gazebo simulation and
+
+using an real world Adeept 4-DOF Robot.
+
+## Demonstration
+
+
+<p align="center">
+
+<p align="center">
+  	<img src="./demo/ABC_sim.gif"/>
+    <img src="./demo/ABC_robot.gif"/>
+</p>
 
 ## Install & Build
 
@@ -18,16 +30,17 @@ Install gazebo controllers:
 
 `sudo apt-get install ros-melodic-position-controllers`
 
-To use Arduino (Hardware) in ROS, follow the instructions to [install Arduino IDE](http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup) and [install rosserial library](http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup).
+To use Adeept Robot (Arduino) in ROS, follow the instructions to [install Arduino IDE](http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup) and [install rosserial library](http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup).
 
 **Build Instruction**
 
 1. Clone this repository under **catkin_ws/src/**
 2. Compile under **catkin_ws**: `catkin_make`
-3. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_command/src/**
+3. Go to path: **Adeept-4-DOF-Robot-for-Caligraphy/adeept_command/src/**
 4. Give following python files permission: `chmod +x get_homogeneous.py adeept_connector.py adeept_kin_server.py joints_pos_controller.py joints_vel_controller.py adeept_VK_server.py switch_control.py `.
-5. Go to path: **catkin_ws/src/Adeept-4-DOF-Robot-for-Caligraphy/adeept_path/src/**
+5. Go to path: **Adeept-4-DOF-Robot-for-Caligraphy/adeept_path/src/**
 6. Give following python files permission: `chmod +x draw_alphabet.py plot_trajectory.py`
+7. To use the code with hardware, upload the code `robot.ino` in **adeept_arduino** folder to the robot.
 
 ## Run in Simulation
 
@@ -69,23 +82,25 @@ One could plot the robot waypoints every 200ms to visualize the drawing by
 
 To draw a simple sentence:
 
-`rosservice call adeept/draw_sentence 'ABC'`
+`rosservice call adeept/draw_sentence 'HELLOWORLD'`
 
-![robot_graph](demo/ABC.png)
+![robot_graph](demo/HelloWorld.png)
 
 ## Run with Adeept Robot
 
-Connect one's computer with the Adeept Robot Arduino. Upload the file `robot.ino` in **adeept_arduino** folder to the Arduino Uno via Arduino IDE. 
+Connect one's computer with the Adeept Robot Arduino. Upload the code `robot.ino` in **adeept_arduino** folder to the Arduino Uno via Arduino IDE. 
 
 Run rosserial to forward the Arduino messages to the rest of ROS by:
 
-`rosrun rosserial_python serial_node.py /dev/ttyUSB0 _baud:=9600`
+`rosrun rosserial_python serial_node.py /dev/ttyUSB0 _baud:=115200`
 
 Control one of the robot joints by:
 
-`rostopic pub -1 /adeept/joint1_position_controller/command std_msgs/Float64 "data: 45"`
+`rostopic pub -1 /adeept/joint1_position_controller/command std_msgs/Float64 "data: 0.8"`
 
 To perform the drawing with Adeept Robot, run the simulation step above and one should be able to see the simulation and real-world robot moves simultaneously.
+
+![robot_graph](demo/ABC_robot.jpg)
 
 ## Project Detail
 
@@ -153,7 +168,7 @@ We tuned the parameters and changed the PID values in the file `adeept_control/c
 
 To tune the value and see the result in real time, suggest using `rqt`. More detail of tunning process can refer to [Gazebo Control Tutorial](http://gazebosim.org/tutorials?tut=ros_control).
 
-#### Human Interface
+#### Command Interface
 
 ---
 
@@ -187,9 +202,9 @@ One should be able to see that the robot moves to (0.1, 0, 0.14) in the world co
 
 ---
 
-The final goal of the project is to perform calligraphy. What have been built above are used for this purpose. Trajectory for drawing 26 alphabets are written in `alphabet_trajectory.py`. Specific offset, orientation and scale can be set to change the position and size of the alphabets. To draw a simple sentence.
+The final goal of the project is to perform calligraphy. What have been built above are used for this purpose. Trajectory for drawing 26 alphabets are written in `alphabet_trajectory.py`. Specific offset, orientation and scale can be set to change the position and size of the alphabets. The trajectory planning module would automatically change the scale of the characters according to the string length. To draw a sentense.
 
-`rosservice call adeept/draw_sentence 'ABC'`
+`rosservice call adeept/draw_sentence 'HELLOWORLD'`
 
 #### Node graph:
 
