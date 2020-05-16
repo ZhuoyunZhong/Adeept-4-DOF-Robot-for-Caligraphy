@@ -23,25 +23,21 @@ ros::NodeHandle nh;
 
 void commandCb1(const std_msgs::Float64& msg){
     int joint_pos = msg.data /3.1416*180 + 70;
-    servo1.attach(servopin1);
     servo1.write(joint_pos);
 }
 
 void commandCb2(const std_msgs::Float64& msg){
     int joint_pos = msg.data /3.1416*180 + 155;
-    servo2.attach(servopin2);
     servo2.write(joint_pos);
 }
 
 void commandCb3(const std_msgs::Float64& msg){
     int joint_pos = msg.data /3.1416*180 + 155;
-    servo3.attach(servopin3);
     servo3.write(joint_pos);
 }
 
 void commandCb4(const std_msgs::Float64& msg){
   int  joint_pos = msg.data /3.1416*180 + 75;
-    servo4.attach(servopin4);
     servo4.write(joint_pos);
 }
 
@@ -77,12 +73,12 @@ void setup(){
     nh.subscribe(command_sub3);
     nh.subscribe(command_sub4);
 
-    Serial.begin(9600);
+    Serial.begin(115200);
 }
 
 
 void loop(){
     nh.spinOnce();
     
-    delay(80);
+    delay(50);
 }
